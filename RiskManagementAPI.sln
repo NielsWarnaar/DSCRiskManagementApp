@@ -3,7 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RiskManagementAPI", "RiskManagementAPI\RiskManagementAPI.csproj", "{B0C4B8D8-41E6-45DF-8B27-C5DD360FB238}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RiskManagementAPI", "RiskManagementAPI\RiskManagementAPI.csproj", "{B0C4B8D8-41E6-45DF-8B27-C5DD360FB238}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RiskManagementMAUI", "RiskManagementApp\RiskManagementMAUI.csproj", "{40313C34-60ED-455F-96DC-0441B427F7AC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RiskManagementShared", "RiskManagementShared\RiskManagementShared.csproj", "{D6BB8770-6E27-4C63-B348-B34DC3BCBAC9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RiskManagementWeb", "RiskManagementWeb\RiskManagementWeb.csproj", "{0CA204CE-1F74-49F6-A669-F7F8F883C9B3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +21,22 @@ Global
 		{B0C4B8D8-41E6-45DF-8B27-C5DD360FB238}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B0C4B8D8-41E6-45DF-8B27-C5DD360FB238}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B0C4B8D8-41E6-45DF-8B27-C5DD360FB238}.Release|Any CPU.Build.0 = Release|Any CPU
+		{40313C34-60ED-455F-96DC-0441B427F7AC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{40313C34-60ED-455F-96DC-0441B427F7AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{40313C34-60ED-455F-96DC-0441B427F7AC}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{40313C34-60ED-455F-96DC-0441B427F7AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{40313C34-60ED-455F-96DC-0441B427F7AC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{40313C34-60ED-455F-96DC-0441B427F7AC}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{D6BB8770-6E27-4C63-B348-B34DC3BCBAC9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D6BB8770-6E27-4C63-B348-B34DC3BCBAC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D6BB8770-6E27-4C63-B348-B34DC3BCBAC9}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{D6BB8770-6E27-4C63-B348-B34DC3BCBAC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D6BB8770-6E27-4C63-B348-B34DC3BCBAC9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D6BB8770-6E27-4C63-B348-B34DC3BCBAC9}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{0CA204CE-1F74-49F6-A669-F7F8F883C9B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0CA204CE-1F74-49F6-A669-F7F8F883C9B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0CA204CE-1F74-49F6-A669-F7F8F883C9B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0CA204CE-1F74-49F6-A669-F7F8F883C9B3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
