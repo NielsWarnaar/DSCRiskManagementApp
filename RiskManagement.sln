@@ -1,0 +1,59 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33213.308
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RiskManagementAPI", "RiskManagementAPI\RiskManagementAPI.csproj", "{B0C4B8D8-41E6-45DF-8B27-C5DD360FB238}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RiskManagementSharedTest", "RiskManagementShared\RiskManagementSharedTest.csproj", "{D6BB8770-6E27-4C63-B348-B34DC3BCBAC9}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RiskManagementWeb", "RiskManagementWeb\RiskManagementWeb.csproj", "{0CA204CE-1F74-49F6-A669-F7F8F883C9B3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RiskManagement.MAUI", "RiskManagement.MAUI\RiskManagement.MAUI.csproj", "{AE87DE78-A96F-487E-B6DA-A01F0EE11767}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RiskManagement.Web", "RiskManagement.Web\RiskManagement.Web.csproj", "{B67833C7-96C8-4CB1-A8F3-9C06F7098370}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RiskManagement.Shared", "RiskManagement.Shared\RiskManagement.Shared.csproj", "{857A446C-BF78-4FDA-B658-3C39E95F1994}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B0C4B8D8-41E6-45DF-8B27-C5DD360FB238}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B0C4B8D8-41E6-45DF-8B27-C5DD360FB238}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B0C4B8D8-41E6-45DF-8B27-C5DD360FB238}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B0C4B8D8-41E6-45DF-8B27-C5DD360FB238}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D6BB8770-6E27-4C63-B348-B34DC3BCBAC9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D6BB8770-6E27-4C63-B348-B34DC3BCBAC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D6BB8770-6E27-4C63-B348-B34DC3BCBAC9}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{D6BB8770-6E27-4C63-B348-B34DC3BCBAC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D6BB8770-6E27-4C63-B348-B34DC3BCBAC9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D6BB8770-6E27-4C63-B348-B34DC3BCBAC9}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{0CA204CE-1F74-49F6-A669-F7F8F883C9B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0CA204CE-1F74-49F6-A669-F7F8F883C9B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0CA204CE-1F74-49F6-A669-F7F8F883C9B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0CA204CE-1F74-49F6-A669-F7F8F883C9B3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AE87DE78-A96F-487E-B6DA-A01F0EE11767}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE87DE78-A96F-487E-B6DA-A01F0EE11767}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE87DE78-A96F-487E-B6DA-A01F0EE11767}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{AE87DE78-A96F-487E-B6DA-A01F0EE11767}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE87DE78-A96F-487E-B6DA-A01F0EE11767}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AE87DE78-A96F-487E-B6DA-A01F0EE11767}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{B67833C7-96C8-4CB1-A8F3-9C06F7098370}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B67833C7-96C8-4CB1-A8F3-9C06F7098370}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B67833C7-96C8-4CB1-A8F3-9C06F7098370}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B67833C7-96C8-4CB1-A8F3-9C06F7098370}.Release|Any CPU.Build.0 = Release|Any CPU
+		{857A446C-BF78-4FDA-B658-3C39E95F1994}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{857A446C-BF78-4FDA-B658-3C39E95F1994}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{857A446C-BF78-4FDA-B658-3C39E95F1994}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{857A446C-BF78-4FDA-B658-3C39E95F1994}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {24CD53FE-E52C-4F27-A376-6B5197C8E4E0}
+	EndGlobalSection
+EndGlobal

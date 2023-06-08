@@ -1,7 +1,7 @@
 ﻿using System.Net.Http.Json;
 using RiskManagementShared.Models;
 
-namespace RiskManagementShared.Service;
+namespace RiskManagement.Shared.Service;
 
 public class RiskService
 {
