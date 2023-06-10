@@ -1,0 +1,52 @@
+﻿@page "/UpdateRisk"
+
+@inject HttpClient Http
+@inject NavigationManager NavigationManager
+@inject RiskBean RiskBean
+@inject RiskService RiskService
+@using RiskManagementShared.Models
+@using RiskManagementShared.Services
+@using RiskManagementShared.Beans
+
+<h3>UpdateRisk</h3>
+
+@*if (Movie == null)
+{
+    <h4>Loading...</h4>
+}
+else
+{
+    <EditForm Model="risk" OnInvalidSubmit="Update">
+
+        <div>
+            <label>RiskName</label>
+            <InputText id="RiskName" @bind-Value="risk.RiskName" />
+        </div>
+
+        </EditForm>
+}*@
+
+<h4>@RiskId</h4>
+
+@code {
+    private int RiskId { get; set; }
+    public Risk Risk { get; set; } = new();
+    private Risk risk = new();
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        RiskId = RiskBean.GetRiskId();
+    }
+
+//    protected override async Task OnInitializedAsync()
+//    {
+//        risk = await RiskService.GetRisk(RiskId);
+//    } 
+
+    private async Task Update()
+    {
+        var response = await Http.PutAsJsonAsync($"/api/Risks/{RiskId}",risk);
+        NavigationManager.NavigateTo("/risks");
+    }
+}

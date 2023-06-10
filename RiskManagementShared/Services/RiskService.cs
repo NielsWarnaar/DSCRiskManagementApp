@@ -1,47 +1,61 @@
 ﻿using System.Net.Http.Json;
 using RiskManagementShared.Models;
 
-namespace RiskManagement.Shared.Service;
+namespace RiskManagementShared.Services;
 
 public class RiskService
 {
-    private readonly HttpClient _httpClient;    
+    private readonly HttpClient _httpClient;
 
     public RiskService(HttpClient httpClient)
     {
-        _httpClient = httpClient;
+        this._httpClient = httpClient;
     }
 
     public async Task<IEnumerable<Risk>> GetRisks()
     {
-        var response = await _httpClient.GetAsync("api/risk");
+        try
+        {
+            var response = await _httpClient.GetAsync("api/Risks");
 
-        if (response.IsSuccessStatusCode)
-        {
-            if (response.StatusCode == System.Net.HttpStatusCode.NoContent)
+            if (response.IsSuccessStatusCode)
             {
-                return Enumerable.Empty<Risk>();
+                if (response.StatusCode == System.Net.HttpStatusCode.NoContent)
+                {
+                    return Enumerable.Empty<Risk>();
+                }
+                return await response.Content.ReadFromJsonAsync<IEnumerable<Risk>>();
             }
-            return await response.Content.ReadFromJsonAsync<IEnumerable<Risk>>();
-        }
-        else
+            else
+            {
+                var message = await response.Content.ReadAsStringAsync();
+                throw new Exception(message);
+            }
+        } 
+        catch (Exception)
         {
-            var message = await response.Content.ReadAsStringAsync();
-            throw new Exception(message);
-        }   
-    } 
+              throw;
+        }
+    }
     public async Task<Risk> GetRisk(int id)
     {
-        var response = await _httpClient.GetAsync($"api/risk/{id}");
+        try
+        {
+            var response = await _httpClient.GetAsync($"api/risk/{id}");
 
-        if (response.IsSuccessStatusCode)
+            if (response.IsSuccessStatusCode)
+            {
+                return await response.Content.ReadFromJsonAsync<Risk>();
+            }
+            else
+            {
+                var message = await response.Content.ReadAsStringAsync();
+                throw new Exception(message);
+            }
+        } 
+        catch (Exception)
         {
-            return await response.Content.ReadFromJsonAsync<Risk>();
-        }
-        else
-        {
-            var message = await response.Content.ReadAsStringAsync();
-            throw new Exception(message);
+              throw;
         }
     }
 }

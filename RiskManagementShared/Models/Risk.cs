@@ -8,10 +8,8 @@ public class Risk
 
     public int RiskId { get; set; }
 
-    // For connection with category
-    public int CategoryId { get; set; }
-
     [MaxLength(255)]
+    public string RiskName { get; set; } = null!;
     public string Description { get; set; } = null!;
     public string ActionType { get; set; } = null!;
     public string OutstandingActions { get; set; } = null!;
@@ -20,5 +18,8 @@ public class Risk
     public DateTime CreationDate { get; set; }
     public DateTime LastUpdated { get; set; }
     public DateTime DueDate { get; set; }
+
+    // Navigation Properties
+    public int CategoryId { get; set; }
 
 }

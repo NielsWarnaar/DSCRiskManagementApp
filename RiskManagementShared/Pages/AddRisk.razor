@@ -1,0 +1,79 @@
+﻿@page "/AddRisk"
+
+@inject HttpClient Http
+@inject NavigationManager NavigationManager
+@using RiskManagementShared.Models;
+
+<PageTitle>Add Risk</PageTitle>
+
+<h3>Add Risk</h3>
+
+<EditForm Model="risk" OnInvalidSubmit="Add">
+    
+    <div>
+        <label>RiskName</label>
+        <InputText id="RiskName" @bind-Value="risk.RiskName" />
+    </div>
+
+    <div>
+        <label>Categorie</label>
+        <InputNumber id="Categorie" @bind-Value="risk.CategoryId" />
+    </div>
+
+    <div>
+        <label>Description</label>
+        <InputText id="Description" @bind-Value="risk.Description" />
+    </div>
+
+    <div>
+        <label>ActionType</label>
+        <InputText id="ActionType" @bind-Value="risk.ActionType" />
+    </div>
+
+    <div>
+        <label>OutstandingActions</label>
+        <InputText id="OutstandingActions" @bind-Value="risk.OutstandingActions" />
+    </div>
+
+    <div>
+        <label>Classification</label>
+        <InputText id="Classification" @bind-Value="risk.Classification" />
+    </div>
+
+    <div>
+        <label>CreationDate</label>
+        <InputDate id="CreationDate" @bind-Value="risk.CreationDate" />
+    </div>
+
+    <div>
+        <label>LastUpdated</label>
+        <InputDate id="LastUpdated" @bind-Value="risk.LastUpdated" />
+    </div>
+
+    <div>
+        <label>DueDate</label>
+        <InputDate id="DueDate" @bind-Value="risk.DueDate" />
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+
+</EditForm>
+
+
+@code {
+    private Risk risk = new();
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        risk.CreationDate = DateTime.Now;
+        risk.DueDate = DateTime.Now;
+        risk.LastUpdated = DateTime.Now;
+    }
+
+    private async void Add()
+    {
+        var response = await Http.PostAsJsonAsync<Risk>("/api/Risks", risk);
+        response.EnsureSuccessStatusCode();
+        NavigationManager.NavigateTo("/");
+    }
+}

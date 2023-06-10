@@ -1,9 +1,60 @@
 ﻿@page "/"
+@inject RiskService RiskService
+@inject NavigationManager NavigationManager
+@inject RiskBean RiskBean
+@using RiskManagementShared.Beans
+@using RiskManagementShared.Models
+@using RiskManagementShared
+@using RiskManagementShared.Services
 
-<PageTitle>Index</PageTitle>
+<PageTitle>Overzicht</PageTitle>
 
-<h1>Hello, world!</h1>
+<h3>Risks</h3>
 
-Welcome to your new app.
+@if (Risks == null)
+{
+    <h4>Loading...</h4>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>RiskId</th>
+                <th>RiskName</th>
+                <th>Description</th>
+                <th>ActionType</th>
+                <th>OutstandingActions</th>
+                <th>Classification</th>
+                <th>CreationDate</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var risk in Risks)
+            {
+                <tr>
+                    <td>@risk.RiskId</td>
+                    <td>@risk.RiskName</td>
+                    <td>@risk.Description</td>
+                    <td>@risk.ActionType</td>
+                    <td>@risk.OutstandingActions</td>
+                    <td>@risk.Classification</td>
+                    <td>@risk.CreationDate</td>
+                    <td><a href="/UpdateRisk" @onclick="() => RiskBean.SetRiskId(risk.RiskId)">Update risk</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+<a href="/AddRisk"><button class="btn btn-primary">Add risk</button></a>
+
+
+@code {
+    public IEnumerable<Risk>? Risks { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Risks = await RiskService.GetRisks();
+    }
+}
