@@ -58,4 +58,9 @@ public class RiskService
               throw;
         }
     }
+
+    public async Task DeleteRisk(int id)
+    {
+        await _httpClient.DeleteAsync($"api/Risks/{id}");
+    }
 }

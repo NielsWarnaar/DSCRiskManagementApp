@@ -1,0 +1,59 @@
+﻿@page "/UpdateCategory"
+
+@inject HttpClient Http
+@inject NavigationManager NavigationManager
+@inject CategoryBean CategoryBean
+@inject CategoryService CategoryService
+@using RiskManagementShared.Beans
+@using RiskManagementShared.Models
+@using RiskManagementShared.Services
+
+<h3>UpdateCategory</h3>
+
+@if (Category == null)
+{
+    <h4>Loading...</h4>
+}
+else
+{
+    <EditForm Model="category" OnValidSubmit="@Update">
+
+        <div>
+            <label>CategoryName</label>
+            <InputText class="forn-control" id="CategoryName" @bind-Value="category.CategoryName" placeholder="@Category.CategoryName" />
+        </div>
+
+        <div>
+            <label>CategoryDescription</label>
+            <InputText class="forn-control" id="CategoryDescription" @bind-Value="category.Categorydescription" placeholder="@Category.Categorydescription" />
+        </div>
+
+        <button type="submit" class="btn btn-primary">Update categorie</button>
+
+    </EditForm>
+}
+
+@code {
+    private int CategoryId { get; set; }
+    public Category Category { get; set; } = new Category();
+    private Category category = new Category();
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        CategoryId = CategoryBean.GetCategoryId();
+        category.CategoryId = CategoryId;
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Category = await CategoryService.GetCategory(CategoryId);
+    }
+
+    private async Task Update()
+    {
+        var response = await Http.PutAsJsonAsync<Category>($"api/Categories/{CategoryId}", Category);
+        response.EnsureSuccessStatusCode();
+        NavigationManager.NavigateTo("/Categories");
+    }
+}

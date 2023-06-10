@@ -1,4 +1,5 @@
 ﻿@page "/"
+
 @inject RiskService RiskService
 @inject NavigationManager NavigationManager
 @inject RiskBean RiskBean
@@ -40,7 +41,10 @@ else
                     <td>@risk.OutstandingActions</td>
                     <td>@risk.Classification</td>
                     <td>@risk.CreationDate</td>
-                    <td><a href="/UpdateRisk" @onclick="() => RiskBean.SetRiskId(risk.RiskId)">Update risk</a></td>
+                    <td>
+                        <a href="/UpdateRisk" @onclick="() => RiskBean.SetRiskId(risk.RiskId)">Update risk</a>
+                        <button class="btn btn-danger" @onclick="@(() => Delete(risk.RiskId))">Delete</button>
+                    </td>
                 </tr>
             }
         </tbody>
@@ -50,6 +54,7 @@ else
 <a href="/AddRisk"><button class="btn btn-primary">Add risk</button></a>
 <a href="/AddCategory"><button class="btn btn-primary">Add category</button></a>
 <a href="/Matrix"><button class="btn btn-primary">Kans x risico matrix</button></a>
+<a href="/Categories"><button class="btn btn-primary">Categories</button></a>
 
 
 @code {
@@ -58,5 +63,11 @@ else
     protected override async Task OnInitializedAsync()
     {
         Risks = await RiskService.GetRisks();
+    }
+
+    private async Task Delete(int id)
+    {
+        await RiskService.DeleteRisk(id);
+        NavigationManager.NavigateTo("/", true);
     }
 }

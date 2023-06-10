@@ -1,7 +1,56 @@
 ﻿@page "/Categories"
 
+@inject CategoryService CategoryService
+@inject NavigationManager NavigationManager
+@inject CategoryBean CategoryBean
+@using RiskManagementShared.Beans
+@using RiskManagementShared.Models
+@using RiskManagementShared.Services
+@using RiskManagementShared
+
 <h3>Categories</h3>
 
+@if (CategoriesAll == null)
+{
+    <h4>Loading...</h4>
+}
+else{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>CategoryName</th>
+                <th>CategoryDescription</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var category in CategoriesAll)
+            {
+                <tr>
+                    <td>@category.CategoryName</td>
+                    <td>@category.Categorydescription</td>
+                    <td>
+                        <a href="/UpdateCategory" @onclick="() => CategoryBean.SetCategoryId(category.CategoryId)">Edit</a>
+                        <button class="btn btn-danger" @onclick="@(() => Delete(category.CategoryId))">Delete</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
 @code {
+    public IEnumerable<Category>? CategoriesAll { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        CategoriesAll = await CategoryService.GetCategories();
+    }
+
+    private async Task Delete(int id)
+    {
+        await CategoryService.DeleteCategory(id);
+        NavigationManager.NavigateTo("/Categories", true);
+    }
 
 }

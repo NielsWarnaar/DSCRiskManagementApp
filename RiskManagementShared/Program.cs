@@ -11,6 +11,8 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost:7023") });
 
 builder.Services.AddScoped<RiskService, RiskService>();
+builder.Services.AddScoped<CategoryService, CategoryService>();
 builder.Services.AddSingleton<RiskBean, RiskBean>();
+builder.Services.AddSingleton<CategoryBean, CategoryBean>();
 
 await builder.Build().RunAsync();

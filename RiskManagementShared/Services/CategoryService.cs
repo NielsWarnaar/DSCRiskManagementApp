@@ -58,4 +58,9 @@ public class CategoryService
             throw;
         }
     }
+
+    public async Task DeleteCategory(int id)
+    {
+        await _httpClient.DeleteAsync($"api/Categories/{id}");
+    }
 }
