@@ -4,14 +4,14 @@
 @inject NavigationManager NavigationManager
 @using RiskManagementShared.Models;
 
-<PageTitle>Add Risk</PageTitle>
+<PageTitle>Nieuw risico</PageTitle>
 
-<h3>Add Risk</h3>
+<h3>Voeg een nieuw risico toe</h3>
 
-<EditForm Model="risk" OnInvalidSubmit="Add">
+<EditForm Model="risk" OnValidSubmit="@Add">
     
     <div>
-        <label>RiskName</label>
+        <label>Naam risico</label>
         <InputText id="RiskName" @bind-Value="risk.RiskName" />
     </div>
 
@@ -21,7 +21,7 @@
     </div>
 
     <div>
-        <label>Description</label>
+        <label>Omschrijving</label>
         <InputText id="Description" @bind-Value="risk.Description" />
     </div>
 
@@ -31,27 +31,27 @@
     </div>
 
     <div>
-        <label>OutstandingActions</label>
+        <label>Uitstaande acties</label>
         <InputText id="OutstandingActions" @bind-Value="risk.OutstandingActions" />
     </div>
 
     <div>
-        <label>Classification</label>
+        <label>Classificatie</label>
         <InputText id="Classification" @bind-Value="risk.Classification" />
     </div>
 
     <div>
-        <label>CreationDate</label>
+        <label>Aanmaakdatum</label>
         <InputDate id="CreationDate" @bind-Value="risk.CreationDate" />
     </div>
 
     <div>
-        <label>LastUpdated</label>
+        <label>Laats geüpdatet</label>
         <InputDate id="LastUpdated" @bind-Value="risk.LastUpdated" />
     </div>
 
     <div>
-        <label>DueDate</label>
+        <label>Vervaldatum</label>
         <InputDate id="DueDate" @bind-Value="risk.DueDate" />
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>
@@ -60,7 +60,7 @@
 
 
 @code {
-    private Risk risk = new();
+    private Risk risk = new Risk();
 
     protected override void OnInitialized()
     {

@@ -1,7 +1,36 @@
 ﻿@page "/AddCategory"
 
-<h3>AddCategory</h3>
+@inject HttpClient Http
+@inject NavigationManager NavigationManager
+@using RiskManagementShared.Models
+
+<PageTitle>Nieuwe categorie</PageTitle>
+
+<h3>Voeg een nieuwe categorie toe</h3>
+
+<EditForm Model="category" OnValidSubmit="@Add">
+    
+    <div>
+        <label>Naam categorie</label>
+        <InputText id="CategoryName" @bind-Value="category.CategoryName" />
+    </div>
+
+    <div>
+        <label>Beschrijving</label>
+        <InputText id="Description" @bind-Value="category.Categorydescription" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+
+    </EditForm>
 
 @code {
+    private Category category = new Category();
 
+    private async Task Add()
+    {
+        var response = await Http.PostAsJsonAsync<Category>("api/Categories", category);
+        response.EnsureSuccessStatusCode();
+        NavigationManager.NavigateTo("/");
+    }
 }

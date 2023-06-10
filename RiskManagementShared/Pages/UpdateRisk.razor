@@ -10,23 +10,63 @@
 
 <h3>UpdateRisk</h3>
 
-@*if (Movie == null)
+@if (Risk == null)
 {
     <h4>Loading...</h4>
 }
 else
 {
-    <EditForm Model="risk" OnInvalidSubmit="Update">
+    <EditForm Model="risk" OnValidSubmit="@Update">
 
         <div>
             <label>RiskName</label>
-            <InputText id="RiskName" @bind-Value="risk.RiskName" />
+            <InputText class="forn-control" id="RiskName" @bind-Value="risk.RiskName" placeholder="@Risk.RiskName" />
         </div>
 
-        </EditForm>
-}*@
+        <div>
+            <label>Categorie</label>
+            <InputNumber class="forn-control" id="Categorie" @bind-Value="risk.CategoryId" placeholder="@Risk.CategoryId" />
+        </div>
 
-<h4>@RiskId</h4>
+        <div>
+            <label>Description</label>
+            <InputText class="forn-control" id="Description" @bind-Value="risk.Description" placeholder="@Risk.Description" />
+        </div>
+
+        <div>
+            <label>ActionType</label>
+            <InputText class="forn-control" id="ActionType" @bind-Value="risk.ActionType" placeholder="@Risk.ActionType" />
+        </div>
+
+        <div>
+            <label>OutstandingActions</label>
+            <InputText class="forn-control" id="OutstandingActions" @bind-Value="risk.OutstandingActions" placeholder="@Risk.OutstandingActions" />
+        </div>
+
+        <div>
+            <label>Classification</label>
+            <InputText class="forn-control" id="Classification" @bind-Value="risk.Classification" placeholder="@Risk.Classification" />
+        </div>
+
+        <div>
+            <label>CreationDate</label>
+            <InputDate class="forn-control" id="CreationDate" @bind-Value="risk.CreationDate" placeholder="@Risk.CreationDate" />
+        </div>
+
+        <div>
+            <label>LastUpdated</label>
+            <InputDate class="forn-control" id="LastUpdated" @bind-Value="risk.LastUpdated" placeholder="@Risk.LastUpdated" />
+        </div>
+
+        <div>
+            <label>DueDate</label>
+            <InputDate class="forn-control" id="DueDate" @bind-Value="risk.DueDate" placeholder="@Risk.DueDate" />
+        </div>
+
+        <button type="submit" class="btn btn-primary">Update risico</button>
+
+        </EditForm>
+}
 
 @code {
     private int RiskId { get; set; }
@@ -36,17 +76,19 @@ else
     protected override void OnInitialized()
     {
         base.OnInitialized();
+        risk.LastUpdated = DateTime.Now;
         RiskId = RiskBean.GetRiskId();
+        risk.RiskId = RiskId;
     }
 
-//    protected override async Task OnInitializedAsync()
-//    {
-//        risk = await RiskService.GetRisk(RiskId);
-//    } 
+    protected override async Task OnInitializedAsync()
+    {
+        risk = await RiskService.GetRisk(RiskId);
+    } 
 
     private async Task Update()
     {
         var response = await Http.PutAsJsonAsync($"/api/Risks/{RiskId}",risk);
-        NavigationManager.NavigateTo("/risks");
+        NavigationManager.NavigateTo("/");
     }
 }

@@ -3,59 +3,59 @@ using RiskManagementShared.Models;
 
 namespace RiskManagementShared.Services;
 
-public class RiskService
+public class CategoryService
 {
     private readonly HttpClient _httpClient;
 
-    public RiskService(HttpClient httpClient)
+    public CategoryService(HttpClient httpClient)
     {
         this._httpClient = httpClient;
     }
 
-    public async Task<IEnumerable<Risk>> GetRisks()
+    public async Task<IEnumerable<Category>> GetCategories()
     {
         try
         {
-            var response = await _httpClient.GetAsync("api/Risks");
+            var response = await _httpClient.GetAsync("api/Categories");
 
             if (response.IsSuccessStatusCode)
             {
                 if (response.StatusCode == System.Net.HttpStatusCode.NoContent)
                 {
-                    return Enumerable.Empty<Risk>();
+                    return Enumerable.Empty<Category>();
                 }
-                return await response.Content.ReadFromJsonAsync<IEnumerable<Risk>>();
+                return await response.Content.ReadFromJsonAsync<IEnumerable<Category>>();
             }
             else
             {
                 var message = await response.Content.ReadAsStringAsync();
                 throw new Exception(message);
             }
-        } 
+        }
         catch (Exception)
         {
-              throw;
+            throw;
         }
     }
-    public async Task<Risk> GetRisk(int id)
+    public async Task<Category> GetCategory(int id)
     {
         try
         {
-            var response = await _httpClient.GetAsync($"api/Risks/{id}");
+            var response = await _httpClient.GetAsync($"api/Categories/{id}");
 
             if (response.IsSuccessStatusCode)
             {
-                return await response.Content.ReadFromJsonAsync<Risk>();
+                return await response.Content.ReadFromJsonAsync<Category>();
             }
             else
             {
                 var message = await response.Content.ReadAsStringAsync();
                 throw new Exception(message);
             }
-        } 
+        }
         catch (Exception)
         {
-              throw;
+            throw;
         }
     }
 }
