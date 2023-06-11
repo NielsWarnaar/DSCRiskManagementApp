@@ -3,7 +3,7 @@ using RiskManagementAPI.Repositories;
 
 namespace RiskManagementAPI.Services;
 
-public class RiskHistoryService
+public class RiskHistoryService : IRiskHistoryService
 {
     private readonly IRiskHistoryRepository _riskHistoryRepository;
 
