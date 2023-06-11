@@ -33,7 +33,7 @@ else
         <tbody>
             @foreach (var risk in Risks)
             {
-                <tr>
+                <tr @onclick="() => RiskDetails(risk.RiskId)">
                     <td>@risk.RiskId</td>
                     <td>@risk.RiskName</td>
                     <td>@risk.Description</td>
@@ -69,5 +69,11 @@ else
     {
         await RiskService.DeleteRisk(id);
         NavigationManager.NavigateTo("/", true);
+    }
+
+    private void RiskDetails(int id)
+    {
+        RiskBean.SetRiskId(id);
+        NavigationManager.NavigateTo("/RiskHistory", true);
     }
 }
