@@ -40,6 +40,19 @@ namespace RiskManagementAPI.Controllers
             return Ok(riskHistory);
         }
 
+        // GET: api/RiskHistories/Risks/5
+        [HttpGet("Risks/{riskId}")]
+        public async Task<ActionResult<IEnumerable<RiskHistory>>> GetRiskHistoryByRiskId(int riskId)
+        {
+            var riskHistory = await _riskHistoryService.GetRiskHistoryByRiskId(riskId);
+            if (riskHistory == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(riskHistory);
+        }
+
         // PUT: api/RiskHistories/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]

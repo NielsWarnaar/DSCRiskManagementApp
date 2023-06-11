@@ -23,6 +23,13 @@ public class RiskHistoryRepository : IRiskHistoryRepository
         return await _dbContext.RiskHistories.FindAsync(RiskHistoryID);
     }
 
+    public async Task<IEnumerable<RiskHistory>> GetRiskHistoryByRiskId(int RiskID)
+    {
+        return await _dbContext.RiskHistories
+            .Where(risk => risk.RiskId == RiskID)
+            .ToListAsync();
+    }
+
     public async Task AddRiskHistory(RiskHistory riskHistory)
     {
         _dbContext.RiskHistories.Add(riskHistory);

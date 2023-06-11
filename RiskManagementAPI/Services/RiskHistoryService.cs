@@ -21,6 +21,10 @@ public class RiskHistoryService : IRiskHistoryService
     {
         return await _riskHistoryRepository.GetRiskHistoryByID(id);
     }
+    public async Task<IEnumerable<RiskHistory>> GetRiskHistoryByRiskId(int riskId)
+    {
+        return await _riskHistoryRepository.GetRiskHistoryByRiskId(riskId);
+    }
 
     public async Task CreateRiskHistory(RiskHistory riskHistory)
     {
