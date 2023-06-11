@@ -36,5 +36,9 @@ public class NormService : INormService
     {
         await _normRepository.DeleteNorm(id);
     }
+    public async Task<bool> NormExists(int id)
+    {
+        return await _normRepository.NormExists(id);
+    }
 }
-}
+

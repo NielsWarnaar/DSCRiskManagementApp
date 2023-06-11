@@ -9,4 +9,5 @@ public interface INormService
     Task CreateNorm(Norm norm);
     Task UpdateNorm(Norm norm);
     Task DeleteNorm(int id);
+    Task<bool> NormExists(int id);
 }

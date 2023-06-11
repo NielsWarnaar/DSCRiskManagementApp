@@ -9,4 +9,5 @@ public interface IControlRepository
     Task AddControl(Control control);
     Task UpdateControl(Control control);
     Task DeleteControl(int ControlID);
+    Task<bool> ControlExists(int ControlID);
 }

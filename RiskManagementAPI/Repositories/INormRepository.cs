@@ -9,4 +9,5 @@ public interface INormRepository
     Task AddNorm(Norm norm);
     Task UpdateNorm(Norm norm);
     Task DeleteNorm(int NormID);
+    Task<bool> NormExists(int NormID);
 }

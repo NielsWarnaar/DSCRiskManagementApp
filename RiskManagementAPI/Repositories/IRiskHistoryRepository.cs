@@ -9,4 +9,5 @@ public interface IRiskHistoryRepository
     Task AddRiskHistory(RiskHistory riskHistory);
     Task UpdateRiskHistory(RiskHistory riskHistory);
     Task DeleteRiskHistory(int RiskHistoryID);
+    Task<bool> RiskHistoryExists(int RiskHistoryID);
 }

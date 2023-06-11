@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using RiskManagementAPI.DBContext;
+﻿using Microsoft.AspNetCore.Mvc;
 using RiskManagementAPI.Models;
+using RiskManagementAPI.Services;
 
 namespace RiskManagementAPI.Controllers
 {
@@ -14,40 +8,35 @@ namespace RiskManagementAPI.Controllers
     [ApiController]
     public class ControlsController : ControllerBase
     {
-        private readonly RiskDbContext _context;
+        private readonly IControlService _controlService;
 
-        public ControlsController(RiskDbContext context)
+        public ControlsController(IControlService controlService)
         {
-            _context = context;
+            _controlService = controlService;
         }
 
         // GET: api/Controls
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Control>>> GetControls()
         {
-          if (_context.Controls == null)
-          {
-              return NotFound();
-          }
-            return await _context.Controls.ToListAsync();
+            var controls = await _controlService.GetControls();
+            if (controls == null)
+            {
+                return NotFound();
+            }
+            return Ok(controls);
         }
 
         // GET: api/Controls/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Control>> GetControl(int id)
         {
-          if (_context.Controls == null)
-          {
-              return NotFound();
-          }
-            var control = await _context.Controls.FindAsync(id);
-
+            var control = await _controlService.GetControlById(id);
             if (control == null)
             {
                 return NotFound();
             }
-
-            return control;
+            return Ok(control);
         }
 
         // PUT: api/Controls/5
@@ -60,15 +49,13 @@ namespace RiskManagementAPI.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(control).State = EntityState.Modified;
-
             try
             {
-                await _context.SaveChangesAsync();
+                await _controlService.UpdateControl(control);
             }
-            catch (DbUpdateConcurrencyException)
+            catch (Exception)
             {
-                if (!ControlExists(id))
+                if (!await _controlService.ControlExists(id))
                 {
                     return NotFound();
                 }
@@ -86,12 +73,13 @@ namespace RiskManagementAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<Control>> PostControl(Control control)
         {
-          if (_context.Controls == null)
-          {
-              return Problem("Entity set 'RiskDbContext.Controls'  is null.");
-          }
-            _context.Controls.Add(control);
-            await _context.SaveChangesAsync();
+            try {                 
+                await _controlService.CreateControl(control);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);   
+            }
 
             return CreatedAtAction("GetControl", new { id = control.ControlId }, control);
         }
@@ -100,25 +88,15 @@ namespace RiskManagementAPI.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteControl(int id)
         {
-            if (_context.Controls == null)
-            {
-                return NotFound();
-            }
-            var control = await _context.Controls.FindAsync(id);
+            var control = await _controlService.GetControlById(id);
             if (control == null)
             {
                 return NotFound();
             }
 
-            _context.Controls.Remove(control);
-            await _context.SaveChangesAsync();
+            await _controlService.DeleteControl(control.ControlId);
 
             return NoContent();
-        }
-
-        private bool ControlExists(int id)
-        {
-            return (_context.Controls?.Any(e => e.ControlId == id)).GetValueOrDefault();
         }
     }
 }

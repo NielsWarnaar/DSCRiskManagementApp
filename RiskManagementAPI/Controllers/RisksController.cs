@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using RiskManagementAPI.DBContext;
+﻿using Microsoft.AspNetCore.Mvc;
 using RiskManagementAPI.Models;
+using RiskManagementAPI.Services;
 
 namespace RiskManagementAPI.Controllers
 {
@@ -14,40 +8,36 @@ namespace RiskManagementAPI.Controllers
     [ApiController]
     public class RisksController : ControllerBase
     {
-        private readonly RiskDbContext _context;
+        private readonly IRiskService _riskService;
 
-        public RisksController(RiskDbContext context)
+        public RisksController(IRiskService riskService)
         {
-            _context = context;
+            _riskService = riskService;
         }
 
         // GET: api/Risks
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Risk>>> GetRisks()
         {
-          if (_context.Risks == null)
-          {
-              return NotFound();
-          }
-            return await _context.Risks.ToListAsync();
+            var risks = await _riskService.GetRisks();
+            if (risks == null)
+            {
+                return NotFound();
+            }
+            return Ok(risks);
         }
 
         // GET: api/Risks/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Risk>> GetRisk(int id)
         {
-          if (_context.Risks == null)
-          {
-              return NotFound();
-          }
-            var risk = await _context.Risks.FindAsync(id);
-
+            var risk = await _riskService.GetRiskById(id);
             if (risk == null)
             {
                 return NotFound();
             }
 
-            return risk;
+            return Ok(risk);
         }
 
         // PUT: api/Risks/5
@@ -60,15 +50,13 @@ namespace RiskManagementAPI.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(risk).State = EntityState.Modified;
-
             try
             {
-                await _context.SaveChangesAsync();
+                await _riskService.UpdateRisk(risk);
             }
-            catch (DbUpdateConcurrencyException)
+            catch (Exception)
             {
-                if (!RiskExists(id))
+                if (!await _riskService.RiskExists(id))
                 {
                     return NotFound();
                 }
@@ -86,12 +74,14 @@ namespace RiskManagementAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<Risk>> PostRisk(Risk risk)
         {
-          if (_context.Risks == null)
-          {
-              return Problem("Entity set 'RiskDbContext.Risks'  is null.");
-          }
-            _context.Risks.Add(risk);
-            await _context.SaveChangesAsync();
+          try
+            {
+                await _riskService.AddRisk(risk);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
 
             return CreatedAtAction("GetRisk", new { id = risk.RiskId }, risk);
         }
@@ -100,25 +90,15 @@ namespace RiskManagementAPI.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteRisk(int id)
         {
-            if (_context.Risks == null)
-            {
-                return NotFound();
-            }
-            var risk = await _context.Risks.FindAsync(id);
+            var risk = await _riskService.GetRiskById(id);
             if (risk == null)
             {
                 return NotFound();
             }
 
-            _context.Risks.Remove(risk);
-            await _context.SaveChangesAsync();
+            await _riskService.DeleteRisk(risk.RiskId);
 
             return NoContent();
-        }
-
-        private bool RiskExists(int id)
-        {
-            return (_context.Risks?.Any(e => e.RiskId == id)).GetValueOrDefault();
         }
     }
 }

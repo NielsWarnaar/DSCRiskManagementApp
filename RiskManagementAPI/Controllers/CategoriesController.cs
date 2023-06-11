@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using RiskManagementAPI.DBContext;
+﻿using Microsoft.AspNetCore.Mvc;
 using RiskManagementAPI.Models;
+using RiskManagementAPI.Services;
 
 namespace RiskManagementAPI.Controllers
 {
@@ -14,40 +8,35 @@ namespace RiskManagementAPI.Controllers
     [ApiController]
     public class CategoriesController : ControllerBase
     {
-        private readonly RiskDbContext _context;
+        private readonly ICategoryService _categoriesService;
 
-        public CategoriesController(RiskDbContext context)
+        public CategoriesController(ICategoryService categoriesService)
         {
-            _context = context;
+            _categoriesService = categoriesService;
         }
 
         // GET: api/Categories
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Category>>> GetCategories()
         {
-          if (_context.Categories == null)
-          {
-              return NotFound();
-          }
-            return await _context.Categories.ToListAsync();
+            var categories = await _categoriesService.GetCategories();
+            if (categories == null)
+            {
+                return NotFound();
+            }
+            return Ok(categories);
         }
 
         // GET: api/Categories/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Category>> GetCategory(int id)
         {
-          if (_context.Categories == null)
-          {
-              return NotFound();
-          }
-            var category = await _context.Categories.FindAsync(id);
-
+            var category = await _categoriesService.GetCategoryById(id);
             if (category == null)
             {
                 return NotFound();
             }
-
-            return category;
+            return Ok(category);
         }
 
         // PUT: api/Categories/5
@@ -60,15 +49,13 @@ namespace RiskManagementAPI.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(category).State = EntityState.Modified;
-
             try
             {
-                await _context.SaveChangesAsync();
+                await _categoriesService.UpdateCategory(category);
             }
-            catch (DbUpdateConcurrencyException)
+            catch (Exception)
             {
-                if (!CategoryExists(id))
+                if (!await _categoriesService.CategoryExists(id))
                 {
                     return NotFound();
                 }
@@ -86,12 +73,14 @@ namespace RiskManagementAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<Category>> PostCategory(Category category)
         {
-          if (_context.Categories == null)
-          {
-              return Problem("Entity set 'RiskDbContext.Categories'  is null.");
-          }
-            _context.Categories.Add(category);
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _categoriesService.CreateCategory(category);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
 
             return CreatedAtAction("GetCategory", new { id = category.CategoryId }, category);
         }
@@ -100,25 +89,14 @@ namespace RiskManagementAPI.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCategory(int id)
         {
-            if (_context.Categories == null)
-            {
-                return NotFound();
-            }
-            var category = await _context.Categories.FindAsync(id);
+            var category = await _categoriesService.GetCategoryById(id);
             if (category == null)
             {
                 return NotFound();
             }
-
-            _context.Categories.Remove(category);
-            await _context.SaveChangesAsync();
+            await _categoriesService.DeleteCategory(category.CategoryId);
 
             return NoContent();
-        }
-
-        private bool CategoryExists(int id)
-        {
-            return (_context.Categories?.Any(e => e.CategoryId == id)).GetValueOrDefault();
         }
     }
 }

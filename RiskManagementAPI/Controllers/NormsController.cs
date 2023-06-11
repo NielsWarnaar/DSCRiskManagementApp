@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using RiskManagementAPI.DBContext;
+﻿using Microsoft.AspNetCore.Mvc;
 using RiskManagementAPI.Models;
+using RiskManagementAPI.Services;
 
 namespace RiskManagementAPI.Controllers
 {
@@ -14,40 +8,35 @@ namespace RiskManagementAPI.Controllers
     [ApiController]
     public class NormsController : ControllerBase
     {
-        private readonly RiskDbContext _context;
+        private readonly INormService _normService;
 
-        public NormsController(RiskDbContext context)
+        public NormsController(INormService normService)
         {
-            _context = context;
+            _normService = normService;
         }
 
         // GET: api/Norms
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Norm>>> GetNorms()
         {
-          if (_context.Norms == null)
-          {
-              return NotFound();
-          }
-            return await _context.Norms.ToListAsync();
+            var norms = await _normService.GetNorms();
+            if (norms == null)
+            {
+                return NotFound();
+            }
+            return Ok(norms);
         }
 
         // GET: api/Norms/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Norm>> GetNorm(int id)
         {
-          if (_context.Norms == null)
-          {
-              return NotFound();
-          }
-            var norm = await _context.Norms.FindAsync(id);
-
+            var norm = await _normService.GetNorm(id);
             if (norm == null)
             {
                 return NotFound();
             }
-
-            return norm;
+            return Ok(norm);
         }
 
         // PUT: api/Norms/5
@@ -60,15 +49,13 @@ namespace RiskManagementAPI.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(norm).State = EntityState.Modified;
-
             try
             {
-                await _context.SaveChangesAsync();
+                await _normService.UpdateNorm(norm);
             }
-            catch (DbUpdateConcurrencyException)
+            catch (Exception)
             {
-                if (!NormExists(id))
+                if (!await _normService.NormExists(id))
                 {
                     return NotFound();
                 }
@@ -86,12 +73,14 @@ namespace RiskManagementAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<Norm>> PostNorm(Norm norm)
         {
-          if (_context.Norms == null)
-          {
-              return Problem("Entity set 'RiskDbContext.Norms'  is null.");
-          }
-            _context.Norms.Add(norm);
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _normService.CreateNorm(norm);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
 
             return CreatedAtAction("GetNorm", new { id = norm.NormId }, norm);
         }
@@ -100,25 +89,14 @@ namespace RiskManagementAPI.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteNorm(int id)
         {
-            if (_context.Norms == null)
-            {
-                return NotFound();
-            }
-            var norm = await _context.Norms.FindAsync(id);
+            var norm = await _normService.GetNorm(id);
             if (norm == null)
             {
                 return NotFound();
             }
-
-            _context.Norms.Remove(norm);
-            await _context.SaveChangesAsync();
+            await _normService.DeleteNorm(norm.NormId);
 
             return NoContent();
-        }
-
-        private bool NormExists(int id)
-        {
-            return (_context.Norms?.Any(e => e.NormId == id)).GetValueOrDefault();
         }
     }
 }

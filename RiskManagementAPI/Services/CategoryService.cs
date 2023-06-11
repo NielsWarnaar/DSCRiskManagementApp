@@ -36,4 +36,8 @@ public class CategoryService : ICategoryService
     {
         await _categoryRepository.DeleteCategory(id);
     }
+    public async Task<bool> CategoryExists(int id)
+    {
+        return await _categoryRepository.CategoryExists(id);
+    }
 }

@@ -9,4 +9,5 @@ public interface IRiskRepository
     Task AddRisk(Risk risk);
     Task UpdateRisk(Risk risk);
     Task DeleteRisk(int RiskID);
+    Task<bool> RiskExists(int RiskID);
 }

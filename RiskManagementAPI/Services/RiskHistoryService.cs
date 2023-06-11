@@ -36,4 +36,9 @@ public class RiskHistoryService
     {
         await _riskHistoryRepository.DeleteRiskHistory(id);
     }
+
+    public async Task<bool> RiskHistoryExists(int id)
+    {
+        return await _riskHistoryRepository.RiskHistoryExists(id);
+    }
 }

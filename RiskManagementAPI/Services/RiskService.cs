@@ -36,4 +36,9 @@ public class RiskService : IRiskService
     {
         await _riskRepository.DeleteRisk(id);
     }
+
+    public async Task<bool> RiskExists(int id)
+    {
+        return await _riskRepository.RiskExists(id);
+    }
 }

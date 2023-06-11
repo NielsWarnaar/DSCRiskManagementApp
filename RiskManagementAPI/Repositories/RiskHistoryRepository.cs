@@ -41,4 +41,12 @@ public class RiskHistoryRepository : IRiskHistoryRepository
         _dbContext.RiskHistories.Remove(riskHistory);
         await _dbContext.SaveChangesAsync();
     }
+//    public async Task<IEnumerable<RiskHistory>> GetRiskHistoriesByRiskID(int RiskID)
+//    {
+//        return await _dbContext.RiskHistories.Where(r => r.RiskII == RiskID).ToListAsync();
+//    }
+    public async Task<bool> RiskHistoryExists(int RiskHistoryID)
+    {
+        return await _dbContext.RiskHistories.AnyAsync(e => e.RiskHistoryId == RiskHistoryID);
+    }
 }

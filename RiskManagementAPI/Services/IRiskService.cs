@@ -9,4 +9,5 @@ public interface IRiskService
     Task AddRisk(Risk risk);
     Task UpdateRisk(Risk risk);
     Task DeleteRisk(int id);
+    Task<bool> RiskExists(int id);
 }

@@ -36,4 +36,8 @@ public class ControlService : IControlService
     {
         await _controlRepository.DeleteControl(id);
     }
+    public async Task<bool> ControlExists(int id)
+    {
+        return await _controlRepository.ControlExists(id);
+    }
 }

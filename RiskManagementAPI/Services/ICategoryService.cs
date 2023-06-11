@@ -9,4 +9,5 @@ public interface ICategoryService
     Task CreateCategory(Category category);
     Task UpdateCategory(Category category);
     Task DeleteCategory(int id);
+    Task<bool> CategoryExists(int id);
 }

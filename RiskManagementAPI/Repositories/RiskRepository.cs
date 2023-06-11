@@ -41,6 +41,9 @@ public class RiskRepository : IRiskRepository
         _dbContext.Risks.Remove(risk);
         await _dbContext.SaveChangesAsync();
     }
-}
-{
+
+    public async Task<bool> RiskExists(int RiskID)
+    {
+        return await _dbContext.Risks.AnyAsync(e => e.RiskId == RiskID);
+    }
 }

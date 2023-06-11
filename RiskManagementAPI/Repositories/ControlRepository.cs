@@ -41,4 +41,9 @@ public class ControlRepository : IControlRepository
         _dbContext.Controls.Remove(control);
         await _dbContext.SaveChangesAsync();
     }   
+
+    public async Task<bool> ControlExists(int ControlID)
+    {
+        return await _dbContext.Controls.AnyAsync(e => e.ControlId == ControlID);
+    }
 }

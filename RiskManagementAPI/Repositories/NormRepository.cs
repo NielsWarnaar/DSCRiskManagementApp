@@ -41,4 +41,9 @@ public class NormRepository : INormRepository
         _dbContext.Norms.Remove(norm);
         await _dbContext.SaveChangesAsync();
     }   
+
+    public async Task<bool> NormExists(int NormID)
+    {
+        return await _dbContext.Norms.AnyAsync(e => e.NormId == NormID);
+    }
 }

@@ -9,4 +9,5 @@ public interface IControlService
     Task CreateControl(Control control);
     Task UpdateControl(Control control);
     Task DeleteControl(int id);
+    Task<bool> ControlExists(int id);
 }

@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using RiskManagementAPI.DBContext;
+﻿using Microsoft.AspNetCore.Mvc;
 using RiskManagementAPI.Models;
+using RiskManagementAPI.Services;
 
 namespace RiskManagementAPI.Controllers
 {
@@ -14,40 +8,36 @@ namespace RiskManagementAPI.Controllers
     [ApiController]
     public class RiskHistoriesController : ControllerBase
     {
-        private readonly RiskDbContext _context;
+        private readonly IRiskHistoryService _riskHistoryService;
 
-        public RiskHistoriesController(RiskDbContext context)
+        public RiskHistoriesController(IRiskHistoryService riskHistoryService)
         {
-            _context = context;
+            _riskHistoryService = riskHistoryService;
         }
 
         // GET: api/RiskHistories
         [HttpGet]
         public async Task<ActionResult<IEnumerable<RiskHistory>>> GetRiskHistories()
         {
-          if (_context.RiskHistories == null)
-          {
-              return NotFound();
-          }
-            return await _context.RiskHistories.ToListAsync();
+            var riskHistories = await _riskHistoryService.GetAllRiskHistory();
+            if (riskHistories == null)
+            {
+                return NotFound();
+            }
+            return Ok(riskHistories);
         }
 
         // GET: api/RiskHistories/5
         [HttpGet("{id}")]
         public async Task<ActionResult<RiskHistory>> GetRiskHistory(int id)
         {
-          if (_context.RiskHistories == null)
-          {
-              return NotFound();
-          }
-            var riskHistory = await _context.RiskHistories.FindAsync(id);
-
+            var riskHistory = await _riskHistoryService.GetRiskHistoryById(id);
             if (riskHistory == null)
             {
                 return NotFound();
             }
 
-            return riskHistory;
+            return Ok(riskHistory);
         }
 
         // PUT: api/RiskHistories/5
@@ -60,15 +50,13 @@ namespace RiskManagementAPI.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(riskHistory).State = EntityState.Modified;
-
             try
             {
-                await _context.SaveChangesAsync();
+                await _riskHistoryService.UpdateRiskHistory(riskHistory);
             }
-            catch (DbUpdateConcurrencyException)
+            catch (Exception)
             {
-                if (!RiskHistoryExists(id))
+                if (!await _riskHistoryService.RiskHistoryExists(id))
                 {
                     return NotFound();
                 }
@@ -86,13 +74,14 @@ namespace RiskManagementAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<RiskHistory>> PostRiskHistory(RiskHistory riskHistory)
         {
-          if (_context.RiskHistories == null)
-          {
-              return Problem("Entity set 'RiskDbContext.RiskHistories'  is null.");
-          }
-            _context.RiskHistories.Add(riskHistory);
-            await _context.SaveChangesAsync();
-
+            try
+            {
+                await _riskHistoryService.CreateRiskHistory(riskHistory);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
             return CreatedAtAction("GetRiskHistory", new { id = riskHistory.RiskHistoryId }, riskHistory);
         }
 
@@ -100,25 +89,14 @@ namespace RiskManagementAPI.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteRiskHistory(int id)
         {
-            if (_context.RiskHistories == null)
-            {
-                return NotFound();
-            }
-            var riskHistory = await _context.RiskHistories.FindAsync(id);
+            var riskHistory = await _riskHistoryService.GetRiskHistoryById(id);
             if (riskHistory == null)
             {
                 return NotFound();
             }
-
-            _context.RiskHistories.Remove(riskHistory);
-            await _context.SaveChangesAsync();
+            await _riskHistoryService.DeleteRiskHistory(riskHistory.RiskId);
 
             return NoContent();
-        }
-
-        private bool RiskHistoryExists(int id)
-        {
-            return (_context.RiskHistories?.Any(e => e.RiskHistoryId == id)).GetValueOrDefault();
         }
     }
 }
