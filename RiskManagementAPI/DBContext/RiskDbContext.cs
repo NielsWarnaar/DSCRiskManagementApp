@@ -13,6 +13,7 @@ public class RiskDbContext : DbContext
     }
 
     public DbSet<Risk> Risks { get; set; }
+    public DbSet<RiskHistory> RiskHistories { get; set; }
     public DbSet<Control> Controls { get; set; }
     public DbSet<Category> Categories { get; set; }
     public DbSet<Norm> Norms { get; set; }
