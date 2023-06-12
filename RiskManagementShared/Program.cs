@@ -13,6 +13,9 @@ builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https:/
 builder.Services.AddScoped<RiskService, RiskService>();
 builder.Services.AddScoped<CategoryService, CategoryService>();
 builder.Services.AddScoped<RiskHistoryService, RiskHistoryService>();
+builder.Services.AddScoped<ControlService, ControlService>();
+builder.Services.AddScoped<NormService, NormService>();
+
 builder.Services.AddSingleton<RiskBean, RiskBean>();
 builder.Services.AddSingleton<CategoryBean, CategoryBean>();
 
