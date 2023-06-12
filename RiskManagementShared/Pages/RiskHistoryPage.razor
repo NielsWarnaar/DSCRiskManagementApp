@@ -1,0 +1,66 @@
+﻿@page "/RiskHistory"
+
+@inject RiskHistoryService RiskHistoryService
+@inject NavigationManager NavigationManager
+@inject RiskBean RiskBean
+@using RiskManagementShared.Models
+@using RiskManagementShared.Services
+@using RiskManagementShared.Beans
+@using RiskManagementShared
+
+
+<h3>RiskHistory</h3>
+
+@if (RiskHistories == null)
+{
+    <h4>Loading...</h4>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>RiskHistoryId</th>
+                <th>RiskId</th>
+                <th>ChangeDate</th>
+                <th>ChangeDescription</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var riskHistory in RiskHistories)
+            {
+                <tr>
+                    <td>@riskHistory.RiskHistoryId</td>
+                    <td>@riskHistory.RiskName</td>
+                    <td>@riskHistory.Description</td>
+                    <td>@riskHistory.ActionType</td>
+                    <td>@riskHistory.OutstandingActions</td>
+                    <td>@riskHistory.Classification</td>
+                    <td>@riskHistory.CreationDate</td>
+                    <td>@riskHistory.LastUpdated</td>
+                    <td>@riskHistory.DueDate</td>
+                    <td>@riskHistory.HistoryDate</td>
+                    <td>@riskHistory.RiskId</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+<h3>@RiskId</h3>
+
+@code {
+    private int RiskId { get; set; }
+    public IEnumerable<RiskHistory>? RiskHistories { get; set; }
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        RiskId = RiskBean.GetRiskId();
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        RiskHistories = await RiskHistoryService.GetRiskHistoryByRiskId(RiskId);
+    }
+}

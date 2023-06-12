@@ -33,7 +33,8 @@ else
         <tbody>
             @foreach (var risk in Risks)
             {
-                <tr @onclick="() => RiskDetails(risk.RiskId)">
+                @*<tr @onclick="() => RiskDetails(risk.RiskId)">*@
+                <tr>
                     <td>@risk.RiskId</td>
                     <td>@risk.RiskName</td>
                     <td>@risk.Description</td>
@@ -43,6 +44,7 @@ else
                     <td>@risk.CreationDate</td>
                     <td>
                         <a href="/UpdateRisk" @onclick="() => RiskBean.SetRiskId(risk.RiskId)">Update risk</a>
+                        <a href="/RiskHistory" @onclick="() => RiskBean.SetRiskId(risk.RiskId)">Risk history</a>
                         <button class="btn btn-danger" @onclick="@(() => Delete(risk.RiskId))">Delete</button>
                     </td>
                 </tr>
