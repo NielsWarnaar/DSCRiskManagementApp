@@ -1,7 +1,58 @@
 ﻿@page "/Norms"
 
+@inject NormService NormService
+@inject NavigationManager NavigationManager
+@inject NormBean NormBean
+@using RiskManagementShared.Models
+@using RiskManagementShared.Services
+@using RiskManagementShared
+@using RiskManagementShared.Beans
+
 <h3>Norms</h3>
 
-@code {
+@if (AllNorms == null)
+{
+    <h4>Loading...</h4>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>NormId</th>
+                <th>NormName</th>
+                <th>Description</th>
+                <th>CreationDate</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var norm in AllNorms)
+            {
+                <tr>
+                    <td>@norm.NormId</td>
+                    <td>@norm.NormName</td>
+                    <td>@norm.NormDescription</td>
+                    <td>
+                        <a href="/UpdateNorm" @onclick="() => NormBean.SetNormId(norm.NormId)">Update norm</a>
+                        <button class="btn btn-danger" @onclick="@(() => Delete(norm.NormId))">Delete</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
 
+@code {
+    public IEnumerable<Norm>? AllNorms { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        AllNorms = await NormService.GetNorms();
+    }
+
+    private async Task Delete(int normId)
+    {
+        await NormService.DeleteNorm(normId);
+        NavigationManager.NavigateTo("/Norms", true);
+    }
 }
