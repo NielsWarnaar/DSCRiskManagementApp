@@ -1,0 +1,44 @@
+﻿@page "/AddControl"
+
+@inject HttpClient Http
+@inject NavigationManager NavigationManager
+@using RiskManagementShared.Models;
+
+<h3>AddControl</h3>
+
+<EditForm Model="control" OnValidSubmit="@Add">
+    
+    <div>
+        <label>ControlName</label>
+        <InputText id="ControlName" @bind-Value="control.ControlName" />
+    </div>
+
+    <div>
+        <label>ControlDescription</label>
+        <InputText id="ControlDescription" @bind-Value="control.ControlDescription" />
+    </div>
+
+    <div>
+        <label>ControlType</label>
+        <InputText id="ControlType" @bind-Value="control.ControlType" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+
+    </EditForm>
+
+@code {
+    private Control control = new();
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+    }
+
+private async Task Add()
+    {
+        var response = await Http.PostAsJsonAsync("api/Controls", control);
+        response.EnsureSuccessStatusCode();
+        NavigationManager.NavigateTo("/Controls", true);
+    }
+}

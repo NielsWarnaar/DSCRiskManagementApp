@@ -18,5 +18,8 @@ builder.Services.AddScoped<NormService, NormService>();
 
 builder.Services.AddSingleton<RiskBean, RiskBean>();
 builder.Services.AddSingleton<CategoryBean, CategoryBean>();
+builder.Services.AddSingleton<RiskHistoryBean, RiskHistoryBean>();
+builder.Services.AddSingleton<ControlBean, ControlBean>();
+builder.Services.AddSingleton<NormBean, NormBean>();
 
 await builder.Build().RunAsync();

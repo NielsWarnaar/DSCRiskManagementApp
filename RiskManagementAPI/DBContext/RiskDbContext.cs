@@ -21,5 +21,26 @@ public class RiskDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
+
+  /*      // Making the relationship between Risk and RiskHistory
+        modelBuilder.Entity<Risk>()
+            .HasMany(r => r.RiskHistory)
+            .WithOne(rh => rh.Risk)
+            .HasForeignKey(rh => rh.RiskId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        // Making the relationship between Risk and Control
+        modelBuilder.Entity<Risk>()
+            .HasMany(r => r.Controls)
+            .WithOne(c => c.Risk)
+            .HasForeignKey(c => c.RiskId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        // Making the relationship between Risk and Category
+        modelBuilder.Entity<Risk>()
+            .HasMany(r => r.Categories)
+            .WithOne(c => c.Risk)
+            .HasForeignKey(c => c.RiskId)
+            .OnDelete(DeleteBehavior.Cascade);*/
     }
 }

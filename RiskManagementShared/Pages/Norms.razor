@@ -22,7 +22,6 @@ else
                 <th>NormId</th>
                 <th>NormName</th>
                 <th>Description</th>
-                <th>CreationDate</th>
             </tr>
         </thead>
         <tbody>
@@ -42,6 +41,8 @@ else
     </table>
 }
 
+<button class="btn btn-primary" @onclick="() => AddNorm()">Add norm</button>
+
 @code {
     public IEnumerable<Norm>? AllNorms { get; set; }
 
@@ -54,5 +55,10 @@ else
     {
         await NormService.DeleteNorm(normId);
         NavigationManager.NavigateTo("/Norms", true);
+    }
+
+    private void AddNorm()
+    {
+        NavigationManager.NavigateTo("/AddNorm", true);
     }
 }

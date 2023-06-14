@@ -1,7 +1,38 @@
 ﻿@page "/AddNorm"
 
+@inject HttpClient Http
+@inject NavigationManager NavigationManager
+@using RiskManagementShared.Models;
+
 <h3>AddNorm</h3>
 
-@code {
+<EditForm Model="norm" OnValidSubmit="@Add">
 
+    <div>
+        <label>NormName</label>
+        <InputText id="NormName" @bind-Value="norm.NormName" />
+    </div>
+
+    <div>
+        <label>NormDescription</label>
+        <InputText id="NormDescription" @bind-Value="norm.NormDescription" />
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+
+    </EditForm>
+
+@code {
+    private Norm norm = new();
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+    }
+
+    private async Task Add()
+    {
+        var response = await Http.PostAsJsonAsync("api/Norms", norm);
+        response.EnsureSuccessStatusCode();
+        NavigationManager.NavigateTo("/Norms", true);
+    }
 }

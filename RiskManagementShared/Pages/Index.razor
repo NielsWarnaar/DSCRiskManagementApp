@@ -57,6 +57,8 @@ else
 <a href="/AddCategory"><button class="btn btn-primary">Add category</button></a>
 <a href="/Matrix"><button class="btn btn-primary">Kans x risico matrix</button></a>
 <a href="/Categories"><button class="btn btn-primary">Categories</button></a>
+<button class="btn btn-primary" @onclick="() => Controls()">Controls</button>
+<button class="btn btn-primary" @onclick="() => Norms()">Norms</button>
 
 
 
@@ -78,5 +80,15 @@ else
     {
         RiskBean.SetRiskId(id);
         NavigationManager.NavigateTo("/RiskHistory", true);
+    }
+
+    private void Controls()
+    {
+        NavigationManager.NavigateTo("/Controls", true);
+    }
+
+    private void Norms()
+    {
+        NavigationManager.NavigateTo("/Norms", true);
     }
 }

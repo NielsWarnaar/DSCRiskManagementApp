@@ -1,0 +1,63 @@
+﻿@page "/UpdateControl"
+
+@inject HttpClient Http
+@inject ControlService ControlService
+@inject NavigationManager NavigationManager
+@inject ControlBean ControlBean
+@using RiskManagementShared.Beans
+@using RiskManagementShared.Models
+@using RiskManagementShared.Services
+
+<h3>UpdateControl</h3>
+
+@if (Control == null)
+{
+    <h4>Loading...</h4>
+}
+else
+{
+    <EditForm Model="control" OnValidSubmit="@Update">
+
+        <div>
+            <label>ControlName</label>
+            <InputText class="forn-control" id="ControlName" @bind-Value="control.ControlName" placeholder="@Control.ControlName" />
+        </div>
+
+        <div>
+            <label>ControlDescription</label>
+            <InputText class="forn-control" id="ControlDescription" @bind-Value="control.ControlDescription" placeholder="@Control.ControlDescription" />
+        </div>
+
+        <div>
+            <label>ControlType</label>
+            <InputText class="forn-control" id="ControlType" @bind-Value="control.ControlType" placeholder="@Control.ControlType" />
+        </div>
+
+        <button type="submit" class="btn btn-primary">Update control</button>
+
+    </EditForm>
+}
+
+@code {
+    private int ControlId { get; set; }
+    public Control Control { get; set; } = new();
+    private Control control = new();
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        ControlId = ControlBean.GetControlId();
+        control.ControlId = ControlId;
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Control = await ControlService.GetControl(ControlId);
+    }
+
+    private async Task Update()
+    {
+        var response = await Http.PutAsJsonAsync($"api/Controls/{ControlId}", control);
+        NavigationManager.NavigateTo("/Controls", true);
+    }
+}
