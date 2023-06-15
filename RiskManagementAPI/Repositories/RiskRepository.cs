@@ -23,6 +23,13 @@ public class RiskRepository : IRiskRepository
         return await _dbContext.Risks.FindAsync(RiskID);
     }
 
+    public async Task<IEnumerable<Risk>> GetRiskByCategoryId(int CategoryId)
+    {
+        return await _dbContext.Risks
+            .Where(risk => risk.CategoryId == CategoryId)
+            .ToListAsync();
+    }
+
     public async Task AddRisk(Risk risk)
     {
         _dbContext.Risks.Add(risk);

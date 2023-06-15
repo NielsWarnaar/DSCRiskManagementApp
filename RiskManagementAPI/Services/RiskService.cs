@@ -11,7 +11,7 @@ public class RiskService : IRiskService
 {
     private readonly IRiskRepository _riskRepository;
 
-    private readonly IRiskHistoryRepository? _riskHistoryRepository;
+    private readonly IRiskHistoryRepository _riskHistoryRepository;
 
     public RiskService(IRiskRepository riskRepository, IRiskHistoryRepository riskHistoryRepository)
     {
@@ -29,42 +29,30 @@ public class RiskService : IRiskService
         return await _riskRepository.GetRiskByID(id);
     }
 
+    public async Task<IEnumerable<Risk>> GetRiskByCategoryId(int categoryId)
+    {
+        return await _riskRepository.GetRiskByCategoryId(categoryId);
+    }
+
     public async Task AddRisk(Risk risk)
     {
-        var riskHistory = new RiskHistory();
-
-/*        riskHistory.RiskId = risk.RiskId;
-        riskHistory.RiskName = risk.RiskName;
-        riskHistory.Description = risk.Description;
-        riskHistory.ActionType = risk.ActionType;
-        riskHistory.OutstandingActions = risk.OutstandingActions;
-        riskHistory.Classification = risk.Classification;
-        riskHistory.CreationDate = risk.CreationDate;
-        riskHistory.LastUpdated = risk.LastUpdated;
-        riskHistory.DueDate = risk.DueDate;
-        riskHistory.HistoryDate = DateTime.Now;
-
-        await _riskHistoryRepository.AddRiskHistory(riskHistory);*/
 
         await _riskRepository.AddRisk(risk);
+
+        risk = await _riskRepository.GetRiskByID(risk.RiskId);
+
+        RiskHistory riskHistory = CreateRiskHistoryEntry(risk);
+
+        await _riskHistoryRepository.AddRiskHistory(riskHistory);
+
     }
 
     public async Task UpdateRisk(Risk risk)
     {
-        var riskHistory = new RiskHistory();
+        //var riskHistory = new RiskHistory();
+
+        RiskHistory riskHistory = CreateRiskHistoryEntry(risk);
         //var oldRisk = await _riskRepository.GetRiskByID(risk.RiskId);
-
-        riskHistory.RiskId = risk.RiskId;
-        riskHistory.RiskName = risk.RiskName;
-        riskHistory.Description = risk.Description;
-        riskHistory.ActionType = risk.ActionType;
-        riskHistory.OutstandingActions = risk.OutstandingActions;
-        riskHistory.Classification = risk.Classification;
-        riskHistory.CreationDate = risk.CreationDate;
-        riskHistory.LastUpdated = risk.LastUpdated;
-        riskHistory.DueDate = risk.DueDate;
-        riskHistory.HistoryDate = DateTime.Now;
-
         if (!await _riskRepository.RiskExists(risk.RiskId))
         {
             throw new Exception("Risk not found");
@@ -82,5 +70,23 @@ public class RiskService : IRiskService
     public async Task<bool> RiskExists(int id)
     {
         return await _riskRepository.RiskExists(id);
+    }
+
+    public RiskHistory CreateRiskHistoryEntry(Risk risk)
+    {
+        var riskHistory = new RiskHistory();
+
+        riskHistory.RiskId = risk.RiskId;
+        riskHistory.RiskName = risk.RiskName;
+        riskHistory.Description = risk.Description;
+        riskHistory.ActionType = risk.ActionType;
+        riskHistory.OutstandingActions = risk.OutstandingActions;
+        riskHistory.Classification = risk.Classification;
+        riskHistory.CreationDate = risk.CreationDate;
+        riskHistory.LastUpdated = risk.LastUpdated;
+        riskHistory.DueDate = risk.DueDate;
+        riskHistory.HistoryDate = DateTime.Now;
+
+        return riskHistory;
     }
 }

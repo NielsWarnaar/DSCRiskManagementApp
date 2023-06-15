@@ -1,7 +1,9 @@
 ﻿@page "/AddRisk"
 
+@inject CategoryService CategoryService
 @inject HttpClient Http
 @inject NavigationManager NavigationManager
+@using RiskManagementShared.Services;
 @using RiskManagementShared.Models;
 
 <PageTitle>Nieuw risico</PageTitle>
@@ -16,8 +18,50 @@
     </div>
 
     <div>
+        <label>Risico waarde inherent</label>
+        <InputNumber id="RiskValueInherent" @bind-Value="risk.RiskValueInherent" />
+    </div>
+
+    <div>
+        <label>Risico waarde controlled</label>
+        <InputNumber id="RiskValueControlled" @bind-Value="risk.RiskValueControlled" />
+    </div>
+
+    <div>
+        <label>Waarschijnlijkheid waarde inherent</label>
+        <InputNumber id="ProbabilityValueInherent" @bind-Value="risk.ProbabilityValueInherent" />
+    </div>
+
+    <div>
+        <label>Waarschijnlijkheid waarde controlled</label>
+        <InputNumber id="ProbabilityValueControlled" @bind-Value="risk.ProbabilityValueControlled" />
+    </div>
+
+    <div>
+        <label>Impact waarde inherent</label>
+        <InputNumber id="ImpactValueInherent" @bind-Value="risk.ImpactValueInherent" />
+    </div>
+
+    <div>
+        <label>Impact waarde controlled</label>
+        <InputNumber id="ImpactValueControlled" @bind-Value="risk.ImpactValueControlled" />
+    </div>
+
+    <div>
         <label>Categorie</label>
-        <InputNumber id="Categorie" @bind-Value="risk.CategoryId" />
+        <InputSelect id="Categorie" @bind-Value="risk.CategoryId">
+            @if (Categories == null)
+            {
+                <h4>Loading...</h4>
+            }
+            else
+            {
+                @foreach (var category in Categories)
+                {
+                    <option value="@category.CategoryId">@category.CategoryName</option>
+                }
+            }
+            </InputSelect>
     </div>
 
     <div>
@@ -61,6 +105,12 @@
 
 @code {
     private Risk risk = new Risk();
+    private IEnumerable<Category>? Categories { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Categories = await CategoryService.GetCategories();
+    }
 
     protected override void OnInitialized()
     {

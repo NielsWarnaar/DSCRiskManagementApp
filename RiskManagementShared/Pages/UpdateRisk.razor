@@ -4,6 +4,7 @@
 @inject NavigationManager NavigationManager
 @inject RiskBean RiskBean
 @inject RiskService RiskService
+@inject CategoryService CategoryService
 @using RiskManagementShared.Models
 @using RiskManagementShared.Services
 @using RiskManagementShared.Beans
@@ -24,8 +25,55 @@ else
         </div>
 
         <div>
+            <label>Risico waarde inherent</label>
+            <InputNumber id="RiskValueInherent" @bind-Value="risk.RiskValueInherent" placeholder="@Risk.RiskValueInherent" />
+        </div>
+
+        <div>
+            <label>Risico waarde controlled</label>
+            <InputNumber id="RiskValueControlled" @bind-Value="risk.RiskValueControlled" placeholder="@Risk.RiskValueControlled" />
+        </div>
+
+        <div>
+            <label>Waarschijnlijkheid waarde inherent</label>
+            <InputNumber id="ProbabilityValueInherent" @bind-Value="risk.ProbabilityValueInherent" placeholder="@Risk.ProbabilityValueInherent" />
+        </div>
+
+        <div>
+            <label>Waarschijnlijkheid waarde controlled</label>
+            <InputNumber id="ProbabilityValueControlled" @bind-Value="risk.ProbabilityValueControlled" placeholder="@Risk.ProbabilityValueControlled" />
+        </div>
+
+        <div>
+            <label>Impact waarde inherent</label>
+            <InputNumber id="ImpactValueInherent" @bind-Value="risk.ImpactValueInherent" placeholder="@Risk.ImpactValueInherent" />
+        </div>
+
+        <div>
+            <label>Impact waarde controlled</label>
+            <InputNumber id="ImpactValueControlled" @bind-Value="risk.ImpactValueControlled" placeholder="@Risk.ImpactValueControlled" />
+        </div>
+
+   @*     <div>
             <label>Categorie</label>
             <InputNumber class="forn-control" id="Categorie" @bind-Value="risk.CategoryId" placeholder="@Risk.CategoryId" />
+        </div>*@
+
+        <div>
+            <label>Categorie</label>
+            <InputSelect id="Categorie" @bind-Value="risk.CategoryId" placeholder="@Risk.CategoryId">
+                @if (Categories == null)
+                {
+                    <h4>Loading...</h4>
+                }
+                else
+                {
+                    @foreach (var category in Categories)
+                    {
+                        <option value="@category.CategoryId">@category.CategoryName</option>
+                    }
+                }
+            </InputSelect>
         </div>
 
         <div>
@@ -72,6 +120,7 @@ else
     private int RiskId { get; set; }
     public Risk Risk { get; set; } = new();
     private Risk risk = new();
+    private IEnumerable<Category>? Categories { get; set; }
 
     protected override void OnInitialized()
     {
@@ -84,6 +133,7 @@ else
     protected override async Task OnInitializedAsync()
     {
         risk = await RiskService.GetRisk(RiskId);
+        Categories = await CategoryService.GetCategories();
     } 
 
     private async Task Update()
