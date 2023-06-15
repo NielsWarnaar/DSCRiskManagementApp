@@ -1,0 +1,85 @@
+﻿@page "/RiskPerCategory"
+
+@inject RiskService RiskService
+@inject CategoryBean CategoryBean
+@inject RiskBean RiskBean
+@inject NavigationManager NavigationManager
+@using RiskManagementShared.Beans
+@using RiskManagementShared.Models
+@using RiskManagementShared.Services
+@using RiskManagementShared
+
+<h3>RiskPerCategory</h3>
+
+@if (Risks == null)
+{
+    <h4>Loading...</h4>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>RiskName</th>
+                <th>RiskValueInherent</th>
+                <th>RiskValueControlled</th>
+                <th>ProbabilityValueInherent</th>
+                <th>ProbabilityValueControlled</th>
+                <th>ImpactValueInherent</th>
+                <th>ImpactValueControlled</th>
+                <th>CategoryId</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var risk in Risks)
+            {
+                <tr>
+                    <td>@risk.RiskName</td>
+                    <td>@risk.RiskValueInherent</td>
+                    <td>@risk.RiskValueControlled</td>
+                    <td>@risk.ProbabilityValueInherent</td>
+                    <td>@risk.ProbabilityValueControlled</td>
+                    <td>@risk.ImpactValueInherent</td>
+                    <td>@risk.ImpactValueControlled</td>
+                    <td>@risk.CategoryId</td>
+                    <td>
+                        <a href="/UpdateRisk" @onclick="() => RiskBean.SetRiskId(risk.RiskId)">Update risk</a>
+                        @*<button class="btn btn-primary" @onclick="@(() => UpdateRisk(risk.RiskId))">Update</button>*@
+                        <button class="btn btn-danger" @onclick="@(() => DeleteRisk(risk.RiskId))">Delete</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+<h4>Category Id: @CategoryId</h4>
+
+@code {
+    private int CategoryId { get; set; }
+    public IEnumerable<Risk>? Risks { get; set; }
+
+protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        CategoryId = CategoryBean.GetCategoryId();
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Risks = await RiskService.GetRiskByCategoryId(CategoryId);
+    }
+
+    private async Task DeleteRisk(int id)
+    {
+        await RiskService.DeleteRisk(id);
+        NavigationManager.NavigateTo("/", true);
+    }
+
+    private void UpdateRisk(int id)
+    {
+        RiskBean.SetRiskId(id);
+        NavigationManager.NavigateTo("/UpdateRisk", true);
+    }
+}

@@ -59,6 +59,32 @@ public class RiskService
         }
     }
 
+    public async Task<IEnumerable<Risk>> GetRiskByCategoryId(int categoryId)
+    {
+        try
+        {
+            var response = await _httpClient.GetAsync($"api/Risks/Categories/{categoryId}");
+
+            if (response.IsSuccessStatusCode)
+            {
+                if (response.StatusCode == System.Net.HttpStatusCode.NoContent)
+                {
+                    return Enumerable.Empty<Risk>();
+                }
+                return await response.Content.ReadFromJsonAsync<IEnumerable<Risk>>();
+            }
+            else
+            {
+                var message = await response.Content.ReadAsStringAsync();
+                throw new Exception(message);
+            }
+        } 
+        catch (Exception)
+        {
+              throw;
+        }
+    }
+
     public async Task DeleteRisk(int id)
     {
         await _httpClient.DeleteAsync($"api/Risks/{id}");

@@ -40,6 +40,19 @@ namespace RiskManagementAPI.Controllers
             return Ok(risk);
         }
 
+        // GET: api/Risks/Categories/5
+        [HttpGet("Categories/{categoryId}")]
+        public async Task<ActionResult<IEnumerable<Risk>>> GetRiskByCategoryId(int categoryId)
+        {
+            var risk = await _riskService.GetRiskByCategoryId(categoryId);
+            if (risk == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(risk);
+        }
+
         // PUT: api/Risks/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]

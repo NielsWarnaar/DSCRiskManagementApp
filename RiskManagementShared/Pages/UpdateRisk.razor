@@ -54,11 +54,6 @@ else
             <InputNumber id="ImpactValueControlled" @bind-Value="risk.ImpactValueControlled" placeholder="@Risk.ImpactValueControlled" />
         </div>
 
-   @*     <div>
-            <label>Categorie</label>
-            <InputNumber class="forn-control" id="Categorie" @bind-Value="risk.CategoryId" placeholder="@Risk.CategoryId" />
-        </div>*@
-
         <div>
             <label>Categorie</label>
             <InputSelect id="Categorie" @bind-Value="risk.CategoryId" placeholder="@Risk.CategoryId">
@@ -97,16 +92,6 @@ else
         </div>
 
         <div>
-            <label>CreationDate</label>
-            <InputDate class="forn-control" id="CreationDate" @bind-Value="risk.CreationDate" placeholder="@Risk.CreationDate" />
-        </div>
-
-        <div>
-            <label>LastUpdated</label>
-            <InputDate class="forn-control" id="LastUpdated" @bind-Value="risk.LastUpdated" placeholder="@Risk.LastUpdated" />
-        </div>
-
-        <div>
             <label>DueDate</label>
             <InputDate class="forn-control" id="DueDate" @bind-Value="risk.DueDate" placeholder="@Risk.DueDate" />
         </div>
@@ -125,7 +110,6 @@ else
     protected override void OnInitialized()
     {
         base.OnInitialized();
-        risk.LastUpdated = DateTime.Now;
         RiskId = RiskBean.GetRiskId();
         risk.RiskId = RiskId;
     }

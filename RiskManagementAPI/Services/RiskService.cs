@@ -36,6 +36,8 @@ public class RiskService : IRiskService
 
     public async Task AddRisk(Risk risk)
     {
+        risk.CreationDate = DateTime.Now;
+        risk.LastUpdated = DateTime.Now;
 
         await _riskRepository.AddRisk(risk);
 
@@ -49,10 +51,10 @@ public class RiskService : IRiskService
 
     public async Task UpdateRisk(Risk risk)
     {
-        //var riskHistory = new RiskHistory();
+        risk.LastUpdated = DateTime.Now;
 
         RiskHistory riskHistory = CreateRiskHistoryEntry(risk);
-        //var oldRisk = await _riskRepository.GetRiskByID(risk.RiskId);
+
         if (!await _riskRepository.RiskExists(risk.RiskId))
         {
             throw new Exception("Risk not found");

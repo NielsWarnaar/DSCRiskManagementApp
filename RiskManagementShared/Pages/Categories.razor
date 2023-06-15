@@ -20,6 +20,7 @@ else{
             <tr>
                 <th>CategoryName</th>
                 <th>CategoryDescription</th>
+                <th>CategoryId</th>
                 <th></th>
             </tr>
         </thead>
@@ -29,9 +30,12 @@ else{
                 <tr>
                     <td>@category.CategoryName</td>
                     <td>@category.Categorydescription</td>
+                    <td>@category.CategoryId</td>
                     <td>
                         <a href="/UpdateCategory" @onclick="() => CategoryBean.SetCategoryId(category.CategoryId)">Edit</a>
-                        <button class="btn btn-danger" @onclick="@(() => Delete(category.CategoryId))">Delete</button>
+                        <button class="btn btn-danger" @onclick="@(() => Delete(category.CategoryId))">Delete</button>                       
+                        @*<button class="btn btn-primary" @onclick="() => RisksPerCategory(category.CategoryId)">Risk per category</button>*@
+                        <a href="/RiskPerCategory" @onclick="() => CategoryBean.SetCategoryId(category.CategoryId)">Risk per category</a>
                     </td>
                 </tr>
             }
@@ -53,4 +57,9 @@ else{
         NavigationManager.NavigateTo("/Categories", true);
     }
 
+    private void RisksPerCategory(int categoryId)
+    {
+        CategoryBean.SetCategoryId(categoryId);
+        NavigationManager.NavigateTo("/RiskPerCategory", true);
+    }
 }

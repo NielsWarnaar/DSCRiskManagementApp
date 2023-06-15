@@ -85,16 +85,6 @@
     </div>
 
     <div>
-        <label>Aanmaakdatum</label>
-        <InputDate id="CreationDate" @bind-Value="risk.CreationDate" />
-    </div>
-
-    <div>
-        <label>Laats geüpdatet</label>
-        <InputDate id="LastUpdated" @bind-Value="risk.LastUpdated" />
-    </div>
-
-    <div>
         <label>Vervaldatum</label>
         <InputDate id="DueDate" @bind-Value="risk.DueDate" />
     </div>
@@ -115,9 +105,7 @@
     protected override void OnInitialized()
     {
         base.OnInitialized();
-        risk.CreationDate = DateTime.Now;
         risk.DueDate = DateTime.Now;
-        risk.LastUpdated = DateTime.Now;
     }
 
     private async void Add()
