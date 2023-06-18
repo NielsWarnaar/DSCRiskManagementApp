@@ -41,6 +41,8 @@ else
     </table>
 }
 
+<InputFile OnChange="HandleFileSelected" />
+
 <button class="btn btn-primary" @onclick="() => AddNorm()">Add norm</button>
 
 @code {
@@ -60,5 +62,9 @@ else
     private void AddNorm()
     {
         NavigationManager.NavigateTo("/AddNorm", true);
+    }
+
+    async Task HandleFileSelected(InputFileChangeEventArgs e)
+    {
     }
 }

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RiskManagementAPI.DBContext;
 
@@ -11,9 +12,11 @@ using RiskManagementAPI.DBContext;
 namespace RiskManagementAPI.Migrations
 {
     [DbContext(typeof(RiskDbContext))]
-    partial class RiskDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230618092823_intitialMigration6")]
+    partial class intitialMigration6
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,29 +24,6 @@ namespace RiskManagementAPI.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("NormRisk", b =>
-                {
-                    b.Property<int>("NormRiskId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("NormRiskId"));
-
-                    b.Property<int>("NormId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("RiskId")
-                        .HasColumnType("int");
-
-                    b.HasKey("NormRiskId");
-
-                    b.HasIndex("NormId");
-
-                    b.HasIndex("RiskId");
-
-                    b.ToTable("NormRisk");
-                });
 
             modelBuilder.Entity("RiskManagementAPI.Models.Category", b =>
                 {
@@ -60,6 +40,9 @@ namespace RiskManagementAPI.Migrations
                     b.Property<string>("Categorydescription")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("RiskId")
+                        .HasColumnType("int");
 
                     b.HasKey("CategoryId");
 
@@ -112,9 +95,6 @@ namespace RiskManagementAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("RiskId")
-                        .HasColumnType("int");
-
                     b.HasKey("NormId");
 
                     b.ToTable("Norms");
@@ -157,9 +137,6 @@ namespace RiskManagementAPI.Migrations
 
                     b.Property<DateTime>("LastUpdated")
                         .HasColumnType("datetime2");
-
-                    b.Property<int?>("NormId")
-                        .HasColumnType("int");
 
                     b.Property<string>("OutstandingActions")
                         .IsRequired()
@@ -252,22 +229,9 @@ namespace RiskManagementAPI.Migrations
 
                     b.HasKey("RiskHistoryId");
 
+                    b.HasIndex("RiskId");
+
                     b.ToTable("RiskHistories");
-                });
-
-            modelBuilder.Entity("NormRisk", b =>
-                {
-                    b.HasOne("RiskManagementAPI.Models.Norm", null)
-                        .WithMany()
-                        .HasForeignKey("NormId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("RiskManagementAPI.Models.Risk", null)
-                        .WithMany()
-                        .HasForeignKey("RiskId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("RiskManagementAPI.Models.Control", b =>
@@ -284,7 +248,7 @@ namespace RiskManagementAPI.Migrations
             modelBuilder.Entity("RiskManagementAPI.Models.Risk", b =>
                 {
                     b.HasOne("RiskManagementAPI.Models.Category", "Category")
-                        .WithMany()
+                        .WithMany("Risk")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -292,9 +256,27 @@ namespace RiskManagementAPI.Migrations
                     b.Navigation("Category");
                 });
 
+            modelBuilder.Entity("RiskManagementAPI.Models.RiskHistory", b =>
+                {
+                    b.HasOne("RiskManagementAPI.Models.Risk", "Risk")
+                        .WithMany("RiskHistory")
+                        .HasForeignKey("RiskId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Risk");
+                });
+
+            modelBuilder.Entity("RiskManagementAPI.Models.Category", b =>
+                {
+                    b.Navigation("Risk");
+                });
+
             modelBuilder.Entity("RiskManagementAPI.Models.Risk", b =>
                 {
                     b.Navigation("Controls");
+
+                    b.Navigation("RiskHistory");
                 });
 #pragma warning restore 612, 618
         }

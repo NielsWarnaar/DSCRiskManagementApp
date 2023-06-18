@@ -12,4 +12,8 @@ public class RiskBean
     {
         _riskId = riskId;
     }
+
+    public string[] riskImpact = { "niet merkbaar", "klein", "gemiddeld", "groot", "deastrues" };
+
+    public string[] riskProbability = { "> jaarlijks", "jaarlijks", "maandelijks", "wekelijks", "dagelijks" };
 }

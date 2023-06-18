@@ -22,13 +22,6 @@ public class RiskDbContext : DbContext
     {
         base.OnModelCreating(modelBuilder);
 
-  /*      // Making the relationship between Risk and RiskHistory
-        modelBuilder.Entity<Risk>()
-            .HasMany(r => r.RiskHistory)
-            .WithOne(rh => rh.Risk)
-            .HasForeignKey(rh => rh.RiskId)
-            .OnDelete(DeleteBehavior.Cascade);
-
         // Making the relationship between Risk and Control
         modelBuilder.Entity<Risk>()
             .HasMany(r => r.Controls)
@@ -36,11 +29,24 @@ public class RiskDbContext : DbContext
             .HasForeignKey(c => c.RiskId)
             .OnDelete(DeleteBehavior.Cascade);
 
-        // Making the relationship between Risk and Category
-        modelBuilder.Entity<Risk>()
-            .HasMany(r => r.Categories)
-            .WithOne(c => c.Risk)
-            .HasForeignKey(c => c.RiskId)
+        // Making the relationship between Category and Risk
+/*        modelBuilder.Entity<Category>()
+            .HasMany(c => c.Risk)
+            .WithOne(r => r.Category)
+            .HasForeignKey(r => r.CategoryId)
             .OnDelete(DeleteBehavior.Cascade);*/
+
+        // Making the many to many relationship between Norm and Risk
+        modelBuilder.Entity<Norm>()
+            .HasMany(n => n.Risks)
+            .WithMany(r => r.Norms)
+            .UsingEntity<Dictionary<string, object>>("NormRisk",
+                nr => nr.HasOne<Risk>().WithMany().HasForeignKey("RiskId"),
+                nr => nr.HasOne<Norm>().WithMany().HasForeignKey("NormId"),
+                nr =>
+                {
+                    nr.Property<int>("NormRiskId");
+                    nr.HasKey("NormRiskId");
+                });
     }
 }

@@ -1,12 +1,11 @@
-﻿namespace RiskManagementAPI.Models
+﻿namespace RiskManagementAPI.Models;
+
+public class Category
 {
-    public class Category
-    {
 
-        public string Categorydescription { get; set; } = null!;
+    public string Categorydescription { get; set; } = null!;
 
-        public int CategoryId { get; set; }
+    public int CategoryId { get; set; }
 
-        public string CategoryName { get; set; } = null!;
-    }
+    public string CategoryName { get; set; } = null!;
 }

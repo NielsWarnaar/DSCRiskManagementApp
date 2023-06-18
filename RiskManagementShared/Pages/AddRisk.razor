@@ -3,8 +3,10 @@
 @inject CategoryService CategoryService
 @inject HttpClient Http
 @inject NavigationManager NavigationManager
+@inject RiskBean RiskBean
 @using RiskManagementShared.Services;
 @using RiskManagementShared.Models;
+@using RiskManagementShared.Beans;
 
 <PageTitle>Nieuw risico</PageTitle>
 
@@ -14,37 +16,61 @@
     
     <div>
         <label>Naam risico</label>
-        <InputText id="RiskName" @bind-Value="risk.RiskName" />
-    </div>
-
-    <div>
-        <label>Risico waarde inherent</label>
-        <InputNumber id="RiskValueInherent" @bind-Value="risk.RiskValueInherent" />
-    </div>
-
-    <div>
-        <label>Risico waarde controlled</label>
-        <InputNumber id="RiskValueControlled" @bind-Value="risk.RiskValueControlled" />
+        <InputText id="RiskName" @bind-Value="risk.RiskName"  />
     </div>
 
     <div>
         <label>Waarschijnlijkheid waarde inherent</label>
-        <InputNumber id="ProbabilityValueInherent" @bind-Value="risk.ProbabilityValueInherent" />
+        <InputSelect id="riskValue" @bind-Value="risk.ProbabilityValueInherent">
+            @{int i = 1;}
+            @foreach (var number in RiskBean.riskProbability)
+            {
+                <option value=@i>@number</option>
+                i++;
+            }
+        </InputSelect>
     </div>
 
     <div>
         <label>Waarschijnlijkheid waarde controlled</label>
-        <InputNumber id="ProbabilityValueControlled" @bind-Value="risk.ProbabilityValueControlled" />
+        <InputSelect id="riskValue" @bind-Value="risk.ProbabilityValueControlled">
+            @{
+                int i = 1;
+            }
+            @foreach (var number in RiskBean.riskProbability)
+            {
+                <option value=@i>@number</option>
+                i++;
+            }
+        </InputSelect>
     </div>
 
     <div>
         <label>Impact waarde inherent</label>
-        <InputNumber id="ImpactValueInherent" @bind-Value="risk.ImpactValueInherent" />
+        <InputSelect id="riskValue" @bind-Value="risk.ImpactValueInherent">
+            @{
+                int i = 1;
+            }
+            @foreach (var number in RiskBean.riskImpact)
+            {
+                <option value=@i>@number</option>
+                i++;
+            }
+        </InputSelect>
     </div>
 
     <div>
         <label>Impact waarde controlled</label>
-        <InputNumber id="ImpactValueControlled" @bind-Value="risk.ImpactValueControlled" />
+        <InputSelect id="riskValue" @bind-Value="risk.ImpactValueControlled">
+            @{
+                int i = 1;
+            }
+            @foreach (var number in RiskBean.riskImpact)
+            {
+                <option value=@i>@number</option>
+                i++;
+            }
+        </InputSelect>
     </div>
 
     <div>
@@ -95,7 +121,7 @@
 
 @code {
     private Risk risk = new Risk();
-    private IEnumerable<Category>? Categories { get; set; }
+    private IEnumerable<Category>? Categories { get; set; } = new List<Category>();
 
     protected override async Task OnInitializedAsync()
     {

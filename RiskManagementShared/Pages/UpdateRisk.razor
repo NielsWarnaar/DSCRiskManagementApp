@@ -25,33 +25,59 @@ else
         </div>
 
         <div>
-            <label>Risico waarde inherent</label>
-            <InputNumber id="RiskValueInherent" @bind-Value="risk.RiskValueInherent" placeholder="@Risk.RiskValueInherent" />
-        </div>
-
-        <div>
-            <label>Risico waarde controlled</label>
-            <InputNumber id="RiskValueControlled" @bind-Value="risk.RiskValueControlled" placeholder="@Risk.RiskValueControlled" />
-        </div>
-
-        <div>
             <label>Waarschijnlijkheid waarde inherent</label>
-            <InputNumber id="ProbabilityValueInherent" @bind-Value="risk.ProbabilityValueInherent" placeholder="@Risk.ProbabilityValueInherent" />
+            <InputSelect id="riskValue" @bind-Value="risk.ProbabilityValueInherent">
+                @{
+                    int i = 1;
+                }
+                @foreach (var number in RiskBean.riskProbability)
+                {
+                    <option value=@i>@number</option>
+                    i++;
+                }
+            </InputSelect>
         </div>
 
         <div>
             <label>Waarschijnlijkheid waarde controlled</label>
-            <InputNumber id="ProbabilityValueControlled" @bind-Value="risk.ProbabilityValueControlled" placeholder="@Risk.ProbabilityValueControlled" />
+            <InputSelect id="riskValue" @bind-Value="risk.ProbabilityValueControlled">
+                @{
+                    int i = 1;
+                }
+                @foreach (var number in RiskBean.riskProbability)
+                {
+                    <option value=@i>@number</option>
+                    i++;
+                }
+            </InputSelect>
         </div>
 
         <div>
             <label>Impact waarde inherent</label>
-            <InputNumber id="ImpactValueInherent" @bind-Value="risk.ImpactValueInherent" placeholder="@Risk.ImpactValueInherent" />
+            <InputSelect id="riskValue" @bind-Value="risk.ImpactValueInherent">
+                @{
+                    int i = 1;
+                }
+                @foreach (var number in RiskBean.riskImpact)
+                {
+                    <option value=@i>@number</option>
+                    i++;
+                }
+            </InputSelect>
         </div>
 
         <div>
             <label>Impact waarde controlled</label>
-            <InputNumber id="ImpactValueControlled" @bind-Value="risk.ImpactValueControlled" placeholder="@Risk.ImpactValueControlled" />
+            <InputSelect id="riskValue" @bind-Value="risk.ImpactValueControlled">
+                @{
+                    int i = 1;
+                }
+                @foreach (var number in RiskBean.riskImpact)
+                {
+                    <option value=@i>@number</option>
+                    i++;
+                }
+            </InputSelect>
         </div>
 
         <div>

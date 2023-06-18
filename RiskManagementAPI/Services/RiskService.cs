@@ -38,6 +38,8 @@ public class RiskService : IRiskService
     {
         risk.CreationDate = DateTime.Now;
         risk.LastUpdated = DateTime.Now;
+        risk.RiskValueInherent = risk.ProbabilityValueInherent * risk.ImpactValueInherent;
+        risk.RiskValueControlled = risk.ProbabilityValueControlled * risk.ImpactValueControlled;
 
         await _riskRepository.AddRisk(risk);
 
@@ -52,6 +54,8 @@ public class RiskService : IRiskService
     public async Task UpdateRisk(Risk risk)
     {
         risk.LastUpdated = DateTime.Now;
+        risk.RiskValueInherent = risk.ProbabilityValueInherent * risk.ImpactValueInherent;
+        risk.RiskValueControlled = risk.ProbabilityValueControlled * risk.ImpactValueControlled;
 
         RiskHistory riskHistory = CreateRiskHistoryEntry(risk);
 

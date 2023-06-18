@@ -27,7 +27,11 @@ public class Risk
     public DateTime DueDate { get; set; }
 
     // Navigation Properties
+    public ICollection<Control>? Controls { get; set; }
+    public ICollection<Norm>? Norms { get; }
+    public Category? Category { get; set; }
     public int CategoryId { get; set; }
+    public int? NormId { get; set; }
 
 }
 
