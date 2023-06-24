@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Components.Web;
+/*using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using RiskManagementShared.Services;
 using RiskManagementShared;
@@ -23,3 +23,4 @@ builder.Services.AddSingleton<ControlBean, ControlBean>();
 builder.Services.AddSingleton<NormBean, NormBean>();
 
 await builder.Build().RunAsync();
+*/

@@ -1,0 +1,90 @@
+﻿@page "/Norms"
+
+@inject NormService NormService
+@inject NavigationManager NavigationManager
+@inject NormBean NormBean
+@using System.Data
+@using RiskManagementAppSharedUI.Models
+@using RiskManagementAppSharedUI.Services
+@using RiskManagementAppSharedUI
+@using RiskManagementAppSharedUI.Beans
+
+<h3>Norms</h3>
+
+@if (AllNorms == null)
+{
+    <h4>Loading...</h4>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>NormId</th>
+                <th>NormName</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var norm in AllNorms)
+            {
+                <tr>
+                    <td>@norm.NormId</td>
+                    <td>@norm.NormName</td>
+                    <td>@norm.NormDescription</td>
+                    <td>
+                        <a href="/UpdateNorm" @onclick="() => NormBean.SetNormId(norm.NormId)">Update norm</a>
+                        <button class="btn btn-danger" @onclick="@(() => Delete(norm.NormId))">Delete</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@*<InputFile OnChange="HandleFileSelected" />*@
+
+<button class="btn btn-primary" @onclick="() => AddNorm()">Add norm</button>
+
+@code {
+    public IEnumerable<Norm>? AllNorms { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        AllNorms = await NormService.GetNorms();
+    }
+
+    private async Task Delete(int normId)
+    {
+        await NormService.DeleteNorm(normId);
+        NavigationManager.NavigateTo("/Norms", true);
+    }
+
+    private void AddNorm()
+    {
+        NavigationManager.NavigateTo("/AddNorm", true);
+    }
+
+    /* async Task HandleFileSelected(InputFileChangeEventArgs e)
+    {
+        try
+        {
+            var file = e.File;
+            Stream stream = file.OpenReadStream();
+            MemoryStream memoryStream = new MemoryStream();
+            await stream.CopyToAsync(memoryStream);
+            byte[] content = memoryStream.ToArray();
+            //var buffer = new byte[file.Size];
+            //await file.OpenReadStream().ReadAsync(buffer);
+            string result = System.Text.Encoding.UTF8.GetString(content);
+            Console.WriteLine(result);
+    //var normList = NormService.ConvertExcelToNormList(buffer);
+    //await NormService.AddNorms(normList);
+    //NavigationManager.NavigateTo("/Norms", true);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+    } */
+}

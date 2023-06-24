@@ -1,4 +1,6 @@
-﻿<Router AppAssembly="@typeof(App).Assembly">
+﻿@using RiskManagementAppSharedUI.Shared
+
+<Router AppAssembly="@typeof(App).Assembly" AdditionalAssemblies="new [] { typeof(RiskManagementAppSharedUI.Shared.MainLayout).Assembly }">
     <Found Context="routeData">
         <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
         <FocusOnNavigate RouteData="@routeData" Selector="h1" />

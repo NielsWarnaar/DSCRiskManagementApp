@@ -3,10 +3,11 @@
 @inject NormService NormService
 @inject NavigationManager NavigationManager
 @inject NormBean NormBean
-@using RiskManagementShared.Models
-@using RiskManagementShared.Services
-@using RiskManagementShared
-@using RiskManagementShared.Beans
+@using System.Data
+@using RiskManagementAppSharedUI.Models
+@using RiskManagementAppSharedUI.Services
+@using RiskManagementAppSharedUI
+@using RiskManagementAppSharedUI.Beans
 
 <h3>Norms</h3>
 
@@ -66,5 +67,24 @@ else
 
     async Task HandleFileSelected(InputFileChangeEventArgs e)
     {
+        try
+        {
+            var file = e.File;
+            Stream stream = file.OpenReadStream();
+            MemoryStream memoryStream = new MemoryStream();
+            await stream.CopyToAsync(memoryStream);
+            byte[] content = memoryStream.ToArray();
+            //var buffer = new byte[file.Size];
+            //await file.OpenReadStream().ReadAsync(buffer);
+            string result = System.Text.Encoding.UTF8.GetString(content);
+            Console.WriteLine(result);
+    //var normList = NormService.ConvertExcelToNormList(buffer);
+    //await NormService.AddNorms(normList);
+    //NavigationManager.NavigateTo("/Norms", true);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
     }
 }
