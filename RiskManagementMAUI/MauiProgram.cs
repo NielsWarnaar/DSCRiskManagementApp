@@ -1,5 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using RiskManagementAppSharedUI.Services;
+using RiskManagementAppSharedUI.Beans;
+using Camera.MAUI;
 
 namespace RiskManagementMAUI;
 
@@ -10,6 +12,7 @@ public static class MauiProgram
         var builder = MauiApp.CreateBuilder();
         builder
             .UseMauiApp<App>()
+            .UseMauiCameraView()
             .ConfigureFonts(fonts =>
             {
                 fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
@@ -22,12 +25,19 @@ public static class MauiProgram
 		builder.Logging.AddDebug();
 #endif
 
-        builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost:7023") });
-        builder.Services.AddScoped<RiskService>();
-        builder.Services.AddScoped<CategoryService>();
-        builder.Services.AddScoped<RiskHistoryService>();
-        builder.Services.AddScoped<ControlService>();
-        builder.Services.AddScoped<NormService>();
+        builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://d73f-82-197-205-60.ngrok-free.app") });
+
+        builder.Services.AddScoped<RiskService, RiskService>();
+        builder.Services.AddScoped<CategoryService, CategoryService>();
+        builder.Services.AddScoped<RiskHistoryService, RiskHistoryService>();
+        builder.Services.AddScoped<ControlService, ControlService>();
+        builder.Services.AddScoped<NormService, NormService>();
+
+        builder.Services.AddSingleton<RiskBean, RiskBean>();
+        builder.Services.AddSingleton<CategoryBean, CategoryBean>();
+        builder.Services.AddSingleton<RiskHistoryBean, RiskHistoryBean>();
+        builder.Services.AddSingleton<ControlBean, ControlBean>();
+        builder.Services.AddSingleton<NormBean, NormBean>();
 
         return builder.Build();
     }

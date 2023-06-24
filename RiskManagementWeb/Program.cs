@@ -4,12 +4,19 @@ using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using RiskManagementAppSharedUI.Services;
 using RiskManagementAppSharedUI.Shared;
 using RiskManagementAppSharedUI.Beans;
+using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
-builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost:7023") });
+builder.Services.AddOidcAuthentication(options =>
+{
+    builder.Configuration.Bind("Auth0", options.ProviderOptions);
+    options.ProviderOptions.ResponseType = "code";
+});
+
+builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("http://localhost:5235") });
 
 builder.Services.AddScoped<RiskService, RiskService>();
 builder.Services.AddScoped<CategoryService, CategoryService>();

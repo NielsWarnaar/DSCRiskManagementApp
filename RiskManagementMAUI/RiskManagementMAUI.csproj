@@ -50,11 +50,19 @@
     </ItemGroup>
 
     <ItemGroup>
+        <PackageReference Include="Camera.MAUI" Version="1.4.4" />
+        <PackageReference Include="DotNetEnv" Version="2.5.0" />
         <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\RiskManagementAppSharedUI\RiskManagementAppSharedUI.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <MauiXaml Update="AuthCamPage.xaml">
+        <Generator>MSBuild:Compile</Generator>
+      </MauiXaml>
     </ItemGroup>
 
 </Project>

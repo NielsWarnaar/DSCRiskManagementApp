@@ -6,6 +6,9 @@
         <header>
             <button class="btn btn-primary" @onclick="() => NavigateToHome()">Home</button>
         </header>
+        <div class="top-row px4">
+            <AccessControl />
+        </div>
         <article class="content px-4">
             @Body
         </article>

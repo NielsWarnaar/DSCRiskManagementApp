@@ -1,12 +1,15 @@
-﻿namespace RiskManagementMAUI
-{
-    public partial class App : Application
-    {
-        public App()
-        {
-            InitializeComponent();
+﻿namespace RiskManagementMAUI;
 
-            MainPage = new MainPage();
-        }
+public partial class App : Application
+{
+    public App()
+    {
+        InitializeComponent();
+
+        
+        MainPage = new NavigationPage();
+        MainPage.Navigation.PushAsync(new MainPage());
+        MainPage.Navigation.PushAsync(new AuthCamPage());
+        
     }
 }
