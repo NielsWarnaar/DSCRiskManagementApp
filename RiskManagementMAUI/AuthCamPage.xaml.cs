@@ -1,10 +1,17 @@
 using System.Diagnostics;
+using ZXing;
+using static Camera.MAUI.CameraView;
 
 namespace RiskManagementMAUI;
 
 public partial class AuthCamPage : ContentPage
 {
-	public AuthCamPage()
+    /// Event launched every time a code is detected in the image if "BarCodeDetectionEnabled" is set to true.
+    public event BarcodeResultHandler BarcodeDetected;
+    /// It refresh each time a barcode is detected if BarCodeDetectionEnabled porperty is true
+    public Result[] BarCodeResults;
+
+    public AuthCamPage()
 	{
 		InitializeComponent();
 	}

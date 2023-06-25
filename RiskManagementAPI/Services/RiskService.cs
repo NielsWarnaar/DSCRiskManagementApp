@@ -1,9 +1,5 @@
-﻿using Microsoft.CodeAnalysis.CSharp.Syntax;
-using RiskManagementAPI.Models;
+﻿using RiskManagementAPI.Models;
 using RiskManagementAPI.Repositories;
-using RiskManagementAPI.Controllers;
-using System.Drawing.Text;
-using System.Runtime.InteropServices;
 
 namespace RiskManagementAPI.Services;
 
@@ -92,6 +88,12 @@ public class RiskService : IRiskService
         riskHistory.LastUpdated = risk.LastUpdated;
         riskHistory.DueDate = risk.DueDate;
         riskHistory.HistoryDate = DateTime.Now;
+        riskHistory.RiskValueInherent = risk.RiskValueInherent;
+        riskHistory.RiskValueControlled = risk.RiskValueControlled;
+        riskHistory.ProbabilityValueInherent = risk.ProbabilityValueInherent;
+        riskHistory.ImpactValueInherent = risk.ImpactValueInherent;
+        riskHistory.ProbabilityValueControlled = risk.ProbabilityValueControlled;
+        riskHistory.ImpactValueControlled = risk.ImpactValueControlled;
 
         return riskHistory;
     }

@@ -25,6 +25,13 @@ public static class MauiProgram
 		builder.Logging.AddDebug();
 #endif
 
+        builder.Services.AddOidcAuthentication(options =>
+        {
+            options.ProviderOptions.ClientId = "6S55zeHxJx05at2RPVza5yLUlMwFuNjI";
+            options.ProviderOptions.Authority = "https://dev-3gzwd8uewkmypr7l.us.auth0.com";
+            options.ProviderOptions.ResponseType = "code";
+        });
+
         builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://d73f-82-197-205-60.ngrok-free.app") });
 
         builder.Services.AddScoped<RiskService, RiskService>();
