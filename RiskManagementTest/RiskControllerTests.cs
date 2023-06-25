@@ -58,8 +58,5 @@ namespace RiskManagementAPI.Tests
             // Assert
             Assert.IsType<NotFoundResult>(result.Result);
         }
-
-        // Add more unit tests for other actions in the RisksController
-        // such as GetRiskByCategoryId, PutRisk, PostRisk, and DeleteRisk.
     }
 }
