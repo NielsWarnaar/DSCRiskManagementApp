@@ -52,6 +52,7 @@
     <ItemGroup>
         <PackageReference Include="Camera.MAUI" Version="1.4.4" />
         <PackageReference Include="DotNetEnv" Version="2.5.0" />
+        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Authentication" Version="7.0.3" />
         <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
     </ItemGroup>
 
