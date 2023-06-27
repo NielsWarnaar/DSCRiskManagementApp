@@ -8,6 +8,10 @@
         </header>
         <div class="top-row px4">
             <AccessControl />
+
+            <AuthorizeView>
+            <button style="margin-left: 10px;" class="btn btn-primary" @onclick="@(() => Modal.Show<Pages.QR_code>("QR-code"))">Login via mobile</button>
+            </AuthorizeView>
         </div>
         <article class="content px-4">
             @Body
@@ -16,6 +20,8 @@
 </div>
 
 @code {
+    [CascadingParameter] public IModalService Modal { get; set; }
+
     private void NavigateToHome()
     {
         NavigationManager.NavigateTo("/");

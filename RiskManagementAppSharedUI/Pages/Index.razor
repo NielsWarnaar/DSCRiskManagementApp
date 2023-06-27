@@ -21,19 +21,19 @@ else
     <table class="table">
         <thead>
             <tr>
-                <th>RiskId</th>
-                <th>RiskName</th>
+                <th>Risico ID</th>
+                <th>Naam</th>
                 <th>Risk Value Inherent</th>
                 <th>Risk Value Controlled</th>
                 <th>Probability Value Inherent</th>
                 <th>Probability Value Controlled</th>
                 <th>Impact Value Inherent</th>
                 <th>Impact Value Controlled</th>
-                <th>Description</th>
-                <th>ActionType</th>
-                <th>OutstandingActions</th>
-                <th>Classification</th>
-                <th>CreationDate</th>
+                <th>Omschrijving</th>
+                <th>Actie type</th>
+                <th>Uitstaande actie</th>
+                <th>Clasificatie</th>
+                <th>Aanmaakdatum</th>
             </tr>
         </thead>
         <tbody>
@@ -55,27 +55,35 @@ else
                     <td>@risk.Classification</td>
                     <td>@risk.CreationDate</td>
                     <td>
-                        <a href="/UpdateRisk" @onclick="() => RiskBean.SetRiskId(risk.RiskId)">Update risk</a>
-                        <a href="/RiskHistory" @onclick="() => RiskBean.SetRiskId(risk.RiskId)">Risk history</a>
+                        <AuthorizeView>
+                        <a href="/UpdateRisk"><button class="btn btn-primary" @onclick="() => RiskBean.SetRiskId(risk.RiskId)">Update risk</button></a>
+                        <a href="/RiskHistory"> <button class="btn btn-primary" @onclick="() => RiskBean.SetRiskId(risk.RiskId)">Risk history</button></a>
                         <button class="btn btn-danger" @onclick="@(() => Delete(risk.RiskId))">Delete</button>
+                        </AuthorizeView>
                     </td>
                 </tr>
             }
         </tbody>
     </table>
 }
-
+<a href="/Categories"><button class="btn btn-primary">Categorieën</button></a>
+<button class="btn btn-primary" @onclick="() => Controls()">Controls</button>
+<button class="btn btn-primary" @onclick="() => Norms()">Normen</button>
+<br />
+<br />
+<AuthorizeView>
+<button class="btn btn-primary" @onclick="@(() => Modal.Show<QR_code>("QR-code"))">Login via mobile</button>
 <a href="/AddRisk"><button class="btn btn-primary">Add risk</button></a>
 <a href="/AddCategory"><button class="btn btn-primary">Add category</button></a>
-<a href="/Matrix"><button class="btn btn-primary">Kans x risico matrix</button></a>
-<a href="/Categories"><button class="btn btn-primary">Categories</button></a>
-<button class="btn btn-primary" @onclick="() => Controls()">Controls</button>
-<button class="btn btn-primary" @onclick="() => Norms()">Norms</button>
+</AuthorizeView>
+
 
 
 
 @code {
     public IEnumerable<Risk>? Risks { get; set; }
+
+    [CascadingParameter] public IModalService Modal { get; set; }
 
     protected override async Task OnInitializedAsync()
     {

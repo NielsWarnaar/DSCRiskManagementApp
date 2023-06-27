@@ -11,9 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RiskManagementWeb", "RiskMa
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RiskManagementMAUI", "RiskManagementMAUI\RiskManagementMAUI.csproj", "{11CB131D-5A8E-486A-A0C7-D4DDF4E1C6EC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RiskManagementAppSharedUI", "RiskManagementAppSharedUI\RiskManagementAppSharedUI.csproj", "{DDEBC4FC-DCCA-4739-90CB-5544BB013D04}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RiskManagementAppSharedUI", "RiskManagementAppSharedUI\RiskManagementAppSharedUI.csproj", "{DDEBC4FC-DCCA-4739-90CB-5544BB013D04}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RiskManagementTest", "RiskManagementTest\RiskManagementTest.csproj", "{5EE00130-C411-4358-92B8-7F8A5633815D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RiskManagementTest", "RiskManagementTest\RiskManagementTest.csproj", "{5EE00130-C411-4358-92B8-7F8A5633815D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

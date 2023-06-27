@@ -5,6 +5,7 @@ using RiskManagementAppSharedUI.Services;
 using RiskManagementAppSharedUI.Shared;
 using RiskManagementAppSharedUI.Beans;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
+using Blazored.Modal;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
@@ -17,6 +18,8 @@ builder.Services.AddOidcAuthentication(options =>
 });
 
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("http://localhost:5235") });
+
+builder.Services.AddBlazoredModal();
 
 builder.Services.AddScoped<RiskService, RiskService>();
 builder.Services.AddScoped<CategoryService, CategoryService>();
