@@ -4,32 +4,14 @@
              x:Class="RiskManagementMAUI.AuthCamPage"
              xmlns:cv="clr-namespace:Camera.MAUI;assembly=Camera.MAUI"
              Title="AuthCamPage">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
+    <VerticalStackLayout
+        Spacing="25"
+        Padding="30.0"
+        VerticalOptions="Center">
 
+        <Label x:Name="barcodeResult" FontSize="20" />
         <cv:CameraView x:Name="cameraView" WidthRequest="300" HeightRequest="200"
-                  BarCodeOptions="{Binding BarCodeOptions}" 
-                  BarCodeResults="{Binding BarCodeResults, Mode=OneWayToSource}"
-                  Cameras="{Binding Cameras, Mode=OneWayToSource}" Camera="{Binding Camera}" 
-                  AutoStartPreview="{Binding AutoStartPreview}" 
-                  NumCamerasDetected="{Binding NumCameras, Mode=OneWayToSource}"
-                  AutoSnapShotAsImageSource="True" AutoSnapShotFormat="PNG" 
-                  TakeAutoSnapShot="{Binding TakeSnapshot}" AutoSnapShotSeconds="{Binding SnapshotSeconds}"
-                  Microphones="{Binding Microphones, Mode=OneWayToSource}" Microphone="{Binding Microphone}"
-                  NumMicrophonesDetected="{Binding NumMicrophones, Mode=OneWayToSource}"
-                  AutoRecordingFile="{Binding RecordingFile}" 
-                  AutoStartRecording="{Binding AutoStartRecording}"/>
-
-        <cv:BarcodeImage x:Name="barcodeImage" Aspect="AspectFit"
-                 WidthRequest="400" HeightRequest="400" 
-                 BarcodeWidth="200" BarcodeHeight="200" BarcodeMargin="5"
-                 BarcodeBackground="White" BarcodeForeground="Blue"
-                 BarcodeFormat="QR_CODE" />
-
-        <Image x:Name="image" WidthRequest="300" HeightRequest="300" />
+                  CamerasLoaded="cameraView_CamerasLoaded" BarCodeDetectionEnabled="True" BarcodeDetected="CameraView_BarcodeDetected"/>
 
     </VerticalStackLayout>
 </ContentPage>
