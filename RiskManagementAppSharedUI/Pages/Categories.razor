@@ -8,7 +8,7 @@
 @using RiskManagementAppSharedUI.Services
 @using RiskManagementAppSharedUI
 
-<h3>Categories</h3>
+<h3>Categorieën</h3>
 
 @if (CategoriesAll == null)
 {
@@ -42,6 +42,9 @@ else{
         </tbody>
     </table>
 }
+<AuthorizeView>
+<a href="/AddCategory"><button class="btn btn-primary">Voeg categorie toe</button></a>
+</AuthorizeView>
 
 @code {
     public IEnumerable<Category>? CategoriesAll { get; set; }

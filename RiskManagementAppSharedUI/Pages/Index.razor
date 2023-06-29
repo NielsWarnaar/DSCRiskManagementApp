@@ -10,7 +10,7 @@
 
 <PageTitle>Overzicht</PageTitle>
 
-<h3>Risks</h3>
+<h3>Risico's</h3>
 
 @if (Risks == null)
 {
@@ -75,9 +75,7 @@ else
 <br />
 <br />
 <AuthorizeView>
-<button class="btn btn-primary" @onclick="@(() => Modal.Show<QR_code>("QR-code"))">Login via mobile</button>
-<a href="/AddRisk"><button class="btn btn-primary">Add risk</button></a>
-<a href="/AddCategory"><button class="btn btn-primary">Add category</button></a>
+<a href="/AddRisk"><button class="btn btn-primary">Voeg risico toe</button></a>
 </AuthorizeView>
 
 
@@ -86,12 +84,9 @@ else
 @code {
     public IEnumerable<Risk>? Risks { get; set; }
 
-    [CascadingParameter] public IModalService Modal { get; set; }
-
     protected override async Task OnInitializedAsync()
     {
         Risks = await RiskService.GetRisks();
-        // Category = await CategoryService.GetCategory(CategoryId);
     }
 
     private async Task Delete(int id)

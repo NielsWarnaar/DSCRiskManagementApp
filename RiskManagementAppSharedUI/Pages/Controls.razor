@@ -33,13 +33,12 @@ else
                     <td>@control.ControlName</td>
                     <td>@control.ControlDescription</td>
                     <td>@control.ControlType</td>
-                    <td>
-                        <AuthorizeView>
+                    <AuthorizeView>
+                    <td>                        
                         <a href="/UpdateControl"> <button class="btn btn-primary" @onclick="() => ControlBean.SetControlId(control.ControlId)">Edit</button></a>
                         <button class="btn btn-danger" @onclick="@(() => Delete(control.ControlId))">Delete</button>
-                        </AuthorizeView>
-                        <a href="/RiskPerControl"> <button class="btn btn-primary" @onclick="() => RiskBean.SetRiskId(control.RiskId)">Risco's per control</button></a>
                     </td>
+                    </AuthorizeView>
                 </tr>
             }
         </tbody>
