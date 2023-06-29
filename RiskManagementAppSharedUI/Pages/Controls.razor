@@ -17,7 +17,7 @@
 }
 else
 {
-    <table class="table">
+    <table class="table table-striped">
         <thead>
             <tr>
                 <th>Naam</th>
@@ -35,7 +35,7 @@ else
                     <td>@control.ControlType</td>
                     <AuthorizeView>
                     <td>                        
-                        <a href="/UpdateControl"> <button class="btn btn-primary" @onclick="() => ControlBean.SetControlId(control.ControlId)">Edit</button></a>
+                        <a href="/UpdateControl"> <button class="btn btn-primary" @onclick="() => ControlBean.SetControlId(control.ControlId)">Wijzigen</button></a>
                         <button class="btn btn-danger" @onclick="@(() => Delete(control.ControlId))">Delete</button>
                     </td>
                     </AuthorizeView>
@@ -44,8 +44,9 @@ else
         </tbody>
     </table>
 }
-
-<button class="btn btn-primary" @onclick="() => AddControl()">Add Control</button>
+<AuthorizeView>
+<button class="btn btn-primary" @onclick="() => AddControl()">Voeg control toe</button>
+</AuthorizeView>
 
 @code {
     public IEnumerable<Control>? AllControls { get; set; }

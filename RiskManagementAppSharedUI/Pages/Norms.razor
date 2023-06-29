@@ -18,7 +18,7 @@
 }
 else
 {
-    <table class="table">
+    <table class="table table-striped">
         <thead>
             <tr>
                 <th>Id</th>
@@ -47,7 +47,9 @@ else
 
 @*<InputFile OnChange="HandleFileSelected" />*@
 
-<button class="btn btn-primary" @onclick="() => AddNorm()">Add norm</button>
+<AuthorizeView>
+<button class="btn btn-primary" @onclick="() => AddNorm()">Voeg norm toe</button>
+</AuthorizeView>
 
 @code {
     public IEnumerable<Norm>? AllNorms { get; set; }

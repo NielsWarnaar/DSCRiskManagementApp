@@ -32,7 +32,7 @@ public static class MauiProgram
             options.ProviderOptions.ResponseType = "code";
         });
 
-        builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://505a-82-197-205-60.ngrok-free.app") });
+        builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://d35f-82-197-205-60.ngrok-free.app") });
 
         builder.Services.AddScoped<RiskService, RiskService>();
         builder.Services.AddScoped<CategoryService, CategoryService>();

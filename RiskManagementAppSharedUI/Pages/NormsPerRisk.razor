@@ -3,6 +3,7 @@
 @inject NormService NormService
 @inject NavigationManager NavigationManager
 @inject RiskBean RiskBean
+@inject NormBean NormBean
 @using RiskManagementAppSharedUI.Models
 @using RiskManagementAppSharedUI.Services
 @using RiskManagementAppSharedUI
@@ -16,7 +17,7 @@
 }
 else
 {
-    <table class="table">
+    <table class="table table-striped">
         <thead>
             <tr>
                 <th>Id</th>
@@ -31,6 +32,11 @@ else
                     <td>@norm.NormId</td>
                     <td>@norm.NormName</td>
                     <td>@norm.NormDescription</td>
+                    <AuthorizeView>
+                        <td>
+                        <a href="/UpdateNorm"> <button class="btn btn-primary" @onclick="() => NormBean.SetNormId(norm.NormId)">Update norm</button></a>
+                        </td>
+                    </AuthorizeView>
                 </tr>
             }
         </tbody>

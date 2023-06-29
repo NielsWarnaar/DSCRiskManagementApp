@@ -3,6 +3,7 @@
 @inject ControlService ControlService
 @inject NavigationManager NavigationManager
 @inject RiskBean RiskBean
+@inject ControlBean ControlBean
 @using RiskManagementAppSharedUI.Models
 @using RiskManagementAppSharedUI.Services
 @using RiskManagementAppSharedUI
@@ -16,7 +17,7 @@
 }
 else
 {
-    <table class="table">
+    <table class="table table-striped">
         <thead>
             <tr>
                 <th>Naam</th>
@@ -32,7 +33,13 @@ else
                     <td>@control.ControlName</td>
                     <td>@control.ControlDescription</td>
                     <td>@control.ControlType</td>
+                    <AuthorizeView>
+                        <td>
+                            <a href="/UpdateControl"> <button class="btn btn-primary" @onclick="() => ControlBean.SetControlId(control.ControlId)">Update control</button></a>
+                        </td>
+                    </AuthorizeView>
                 </tr>
+
             }
         </tbody>
     </table>
