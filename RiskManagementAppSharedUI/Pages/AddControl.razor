@@ -2,8 +2,10 @@
 
 @inject HttpClient Http
 @inject NavigationManager NavigationManager
+@inject RiskService RiskService
 @using RiskManagementAppSharedUI.Models;
 @using Microsoft.AspNetCore.Authorization;
+@using RiskManagementAppSharedUI.Services;
 @attribute [Authorize]
 
 <h3>AddControl</h3>
@@ -11,18 +13,35 @@
 <EditForm Model="control" OnValidSubmit="@Add">
     
     <div>
-        <label>ControlName</label>
+        <label>Naam control</label>
         <InputText id="ControlName" @bind-Value="control.ControlName" />
     </div>
 
     <div>
-        <label>ControlDescription</label>
+        <label>Beschijving control</label>
         <InputText id="ControlDescription" @bind-Value="control.ControlDescription" />
     </div>
 
     <div>
-        <label>ControlType</label>
+        <label>Type control</label>
         <InputText id="ControlType" @bind-Value="control.ControlType" />
+    </div>
+
+    <div>
+        <label>Risico</label>
+        <InputSelect id="Risk" @bind-Value="control.RiskId">
+            @if (Risks == null)
+            {
+                <h4>Loading...</h4>
+            }
+            else
+            {
+                @foreach (var risk in Risks)
+                {
+                    <option value="@risk.RiskId">@risk.RiskName</option>
+                }
+            }
+        </InputSelect>
     </div>
 
     <button type="submit" class="btn btn-primary">Submit</button>
@@ -31,6 +50,12 @@
 
 @code {
     private Control control = new();
+    private IEnumerable<Risk> Risks { get; set; } = new List<Risk>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        Risks = await RiskService.GetRisks();
+    }
 
     protected override void OnInitialized()
     {

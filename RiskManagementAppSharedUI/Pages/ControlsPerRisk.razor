@@ -1,0 +1,55 @@
+﻿@page "/ControlsPerRisk"
+
+@inject ControlService ControlService
+@inject NavigationManager NavigationManager
+@inject RiskBean RiskBean
+@using RiskManagementAppSharedUI.Models
+@using RiskManagementAppSharedUI.Services
+@using RiskManagementAppSharedUI
+@using RiskManagementAppSharedUI.Beans
+
+<h3>RiskPerControl</h3>
+
+@if (Controls == null)
+{
+    <h4>Loading...</h4>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Naam</th>
+                <th>Omschrijving</th>
+                <th>Type</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var control in Controls)
+            {
+                <tr>
+                    <td>@control.ControlName</td>
+                    <td>@control.ControlDescription</td>
+                    <td>@control.ControlType</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    public IEnumerable<Control>? Controls { get; set; }
+    private int RiskId { get; set; }
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        RiskId = RiskBean.GetRiskId();
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Controls = await ControlService.GetNomsByRiskId(RiskId);
+    }
+}

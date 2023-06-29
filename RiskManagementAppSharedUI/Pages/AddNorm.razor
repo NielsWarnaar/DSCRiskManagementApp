@@ -2,8 +2,10 @@
 
 @inject HttpClient Http
 @inject NavigationManager NavigationManager
+@inject RiskService RiskService
 @using Microsoft.AspNetCore.Authorization;
 @using RiskManagementAppSharedUI.Models;
+@using RiskManagementAppSharedUI.Services;
 @attribute [Authorize]
 
 <h3>AddNorm</h3>
@@ -11,20 +13,44 @@
 <EditForm Model="norm" OnValidSubmit="@Add">
 
     <div>
-        <label>NormName</label>
+        <label>Naam norm</label>
         <InputText id="NormName" @bind-Value="norm.NormName" />
     </div>
 
     <div>
-        <label>NormDescription</label>
+        <label>Beschrijving norm</label>
         <InputText id="NormDescription" @bind-Value="norm.NormDescription" />
     </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
+
+    <div>
+        <label>Risico</label>
+        <InputSelect id="Risk" @bind-Value="norm.RiskId">
+            @if (Risks == null)
+            {
+                <h4>Loading...</h4>
+            }
+            else
+            {
+                @foreach (var risk in Risks)
+                {
+                    <option value="@risk.RiskId">@risk.RiskName</option>
+                }
+            }
+        </InputSelect>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Voeg norm toe</button>
 
     </EditForm>
 
 @code {
     private Norm norm = new();
+    private IEnumerable<Risk> Risks { get; set; } = new List<Risk>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        Risks = await RiskService.GetRisks();
+    }
 
     protected override void OnInitialized()
     {

@@ -59,6 +59,32 @@ public class NormService
             throw;
         }
     }
+
+    public async Task<IEnumerable<Norm>> GetNormByRiskId(int riskId)
+    {
+        try
+        {
+            var response = await _httpClient.GetAsync($"api/Norms/Risks/{riskId}");
+
+            if (response.IsSuccessStatusCode)
+            {
+                if (response.StatusCode == System.Net.HttpStatusCode.NoContent)
+                {
+                    return Enumerable.Empty<Norm>();
+                }
+                return await response.Content.ReadFromJsonAsync<IEnumerable<Norm>>();
+            }
+            else
+            {
+                var message = await response.Content.ReadAsStringAsync();
+                throw new Exception(message);
+            }
+        }
+        catch (Exception)
+        {
+            throw;
+        }
+    }
     public async Task DeleteNorm(int id)
     {
         await _httpClient.DeleteAsync($"api/Norms/{id}");

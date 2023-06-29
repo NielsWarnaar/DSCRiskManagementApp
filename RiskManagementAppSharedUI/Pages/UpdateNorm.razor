@@ -4,6 +4,7 @@
 @inject NavigationManager NavigationManager
 @inject NormBean NormBean
 @inject NormService NormService
+@inject RiskService RiskService
 @using RiskManagementAppSharedUI.Models
 @using RiskManagementAppSharedUI.Services
 @using RiskManagementAppSharedUI.Beans
@@ -30,6 +31,23 @@ else
             <InputText class="forn-control" id="NormDescription" @bind-Value="norm.NormDescription" placeholder="@Norm.NormDescription" />
         </div>
 
+        <div>
+            <label>Risico</label>
+            <InputSelect id="Risk" @bind-Value="norm.RiskId" placeholder="@norm.RiskId">
+                @if (Risks == null)
+                {
+                    <h4>Loading...</h4>
+                }
+                else
+                {
+                    @foreach (var risk in Risks)
+                    {
+                        <option value="@risk.RiskId">@risk.RiskName</option>
+                    }
+                }
+            </InputSelect>
+        </div>
+
         <button type="submit" class="btn btn-primary">Update norm</button>
 
     </EditForm>
@@ -39,6 +57,7 @@ else
     private int NormId { get; set; }
     public Norm Norm { get; set; } = new();
     private Norm norm = new();
+    private IEnumerable<Risk>? Risks { get; set; }
 
     protected override void OnInitialized()
     {
@@ -50,6 +69,7 @@ else
     protected override async Task OnInitializedAsync()
     {
         Norm = await NormService.GetNorm(NormId);
+        Risks = await RiskService.GetRisks();
     }
 
     private async Task Update()

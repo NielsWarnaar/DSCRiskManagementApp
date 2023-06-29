@@ -23,6 +23,13 @@ public class NormRepository : INormRepository
         return await _dbContext.Norms.FindAsync(NormID);
     }
 
+    public async Task<IEnumerable<Norm>> GetNormByRiskId(int RiskId)
+    {
+        return await _dbContext.Norms
+            .Where(norm => norm.RiskId == RiskId)
+            .ToListAsync();
+    }
+
     public async Task AddNorm(Norm norm)
     {
         _dbContext.Norms.Add(norm);

@@ -10,7 +10,7 @@
 
         public string ControlType { get; set; } = null!;
 
-        public Risk Risk { get; set; } = null!;
+        public Risk? Risk { get; set; }
 
         public int RiskId { get; set; }
     }

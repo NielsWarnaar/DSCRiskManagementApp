@@ -20,8 +20,8 @@ else
     <table class="table">
         <thead>
             <tr>
-                <th>RiskHistoryId</th>
-                <th>Risico naam</th>
+                <th>Id</th>
+                <th>Naam</th>
                 <th>Beschrijving</th>
                 <th>Actie type</th>
                 <th>Uitstaande acties</th>
@@ -30,11 +30,13 @@ else
                 <th>Laatst geüpdatet</th>
                 <th>Vervaldatum</th>
                 <th>Historiedatum</th>
-                <th>Risico ID</th>
-                <th>ImpactValueControlled</th>
-                <th>ImpactValueInherent</th>
-                <th>ProbabilityValueControlled</th>
-                <th>ProbabilityValueInherent</th>
+                <th>Risico Id</th>
+                <th>Risico waarde inherent</th>
+                <th>Risico waarde gecontroleerd</th>
+                <th>Waarschijnlijkheid waarde inherent</th>
+                <th>Waarschijnlijkheid waarde gecontroleerd</th>
+                <th>Impact waarde inherent</th>
+                <th>impact waarde gecontroleerd</th>
             </tr>
         </thead>
         <tbody>
@@ -52,6 +54,8 @@ else
                     <td>@riskHistory.DueDate</td>
                     <td>@riskHistory.HistoryDate</td>
                     <td>@riskHistory.RiskId</td>
+                    <td>@riskHistory.RiskValueInherent</td>
+                    <td>@riskHistory.RiskValueControlled</td>
                     <td>@riskHistory.ImpactValueControlled</td>
                     <td>@riskHistory.ImpactValueInherent</td>
                     <td>@riskHistory.ProbabilityValueControlled</td>
@@ -61,8 +65,6 @@ else
         </tbody>
     </table>
 }
-
-<h3>@RiskId</h3>
 
 @code {
     private int RiskId { get; set; }

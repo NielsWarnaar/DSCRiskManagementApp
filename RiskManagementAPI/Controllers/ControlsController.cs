@@ -39,6 +39,18 @@ namespace RiskManagementAPI.Controllers
             return Ok(control);
         }
 
+        // GET: api/Controls/Risks/5
+        [HttpGet("Risks/{riskId}")]
+        public async Task<ActionResult<IEnumerable<Control>>> GetControlByRiskId(int riskId)
+        {
+            var control = await _controlService.GetControlByRiskId(riskId);
+            if (control == null)
+            {
+                return NotFound();
+            }
+            return Ok(control);
+        }
+
         // PUT: api/Controls/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]

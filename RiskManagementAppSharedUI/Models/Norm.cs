@@ -8,7 +8,7 @@
 
         public string NormDescription { get; set; } = null!;
 
-        public ICollection<Risk> Risks { get; set; } = null!;
+        public ICollection<Risk>? Risks { get; set; }
 
         public int RiskId { get; set; }
     }

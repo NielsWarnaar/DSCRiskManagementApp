@@ -18,10 +18,9 @@ else{
     <table class="table">
         <thead>
             <tr>
-                <th>CategoryName</th>
-                <th>CategoryDescription</th>
-                <th>CategoryId</th>
-                <th></th>
+                <th>Naam</th>
+                <th>Omschrijving</th>
+                <th>Id</th>
             </tr>
         </thead>
         <tbody>
@@ -32,10 +31,11 @@ else{
                     <td>@category.Categorydescription</td>
                     <td>@category.CategoryId</td>
                     <td>
-                        <a href="/UpdateCategory" @onclick="() => CategoryBean.SetCategoryId(category.CategoryId)">Edit</a>
-                        <button class="btn btn-danger" @onclick="@(() => Delete(category.CategoryId))">Delete</button>                       
-                        @*<button class="btn btn-primary" @onclick="() => RisksPerCategory(category.CategoryId)">Risk per category</button>*@
-                        <a href="/RiskPerCategory" @onclick="() => CategoryBean.SetCategoryId(category.CategoryId)">Risk per category</a>
+                        <AuthorizeView>
+                        <a href="/UpdateCategory"> <button class="btn btn-primary" @onclick="() => CategoryBean.SetCategoryId(category.CategoryId)">Wijzigen</button></a>
+                        <button class="btn btn-danger" @onclick="@(() => Delete(category.CategoryId))">Delete</button>
+                        </AuthorizeView>
+                        <a href="/RiskPerCategory"> <button class="btn btn-primary" @onclick="() => CategoryBean.SetCategoryId(category.CategoryId)">Risco's per categorie</button></a>
                     </td>
                 </tr>
             }
@@ -55,11 +55,5 @@ else{
     {
         await CategoryService.DeleteCategory(id);
         NavigationManager.NavigateTo("/Categories", true);
-    }
-
-    private void RisksPerCategory(int categoryId)
-    {
-        CategoryBean.SetCategoryId(categoryId);
-        NavigationManager.NavigateTo("/RiskPerCategory", true);
     }
 }

@@ -1,0 +1,54 @@
+﻿@page "/NormsPerRisk"
+
+@inject NormService NormService
+@inject NavigationManager NavigationManager
+@inject RiskBean RiskBean
+@using RiskManagementAppSharedUI.Models
+@using RiskManagementAppSharedUI.Services
+@using RiskManagementAppSharedUI
+@using RiskManagementAppSharedUI.Beans
+
+<h3>RiskPerNorm</h3>
+
+@if (Norms == null)
+{
+    <h4>Loading...</h4>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Naam</th>
+                <th>Omschrijving</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var norm in Norms)
+            {
+                <tr>
+                    <td>@norm.NormId</td>
+                    <td>@norm.NormName</td>
+                    <td>@norm.NormDescription</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    public IEnumerable<Norm>? Norms { get; set; }
+    private int RiskId { get; set; }
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        RiskId = RiskBean.GetRiskId();
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Norms = await NormService.GetNormByRiskId(RiskId);
+    }
+}

@@ -23,6 +23,13 @@ public class ControlRepository : IControlRepository
         return await _dbContext.Controls.FindAsync(ControlID);
     }
 
+    public async Task<IEnumerable<Control>> GetControlByRiskId(int RiskId)
+    {
+        return await _dbContext.Controls
+            .Where(control => control.RiskId == RiskId)
+            .ToListAsync();
+    }
+
     public async Task AddControl(Control control)
     {
         _dbContext.Controls.Add(control);

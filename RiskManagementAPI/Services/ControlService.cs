@@ -22,6 +22,11 @@ public class ControlService : IControlService
         return await _controlRepository.GetControlByID(id);
     }
 
+    public async Task<IEnumerable<Control>> GetControlByRiskId(int riskId)
+    {
+        return await _controlRepository.GetControlByRiskId(riskId);
+    }
+
     public async Task CreateControl(Control control)
     {
         await _controlRepository.AddControl(control);

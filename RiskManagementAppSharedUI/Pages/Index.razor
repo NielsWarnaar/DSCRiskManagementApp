@@ -23,12 +23,12 @@ else
             <tr>
                 <th>Risico ID</th>
                 <th>Naam</th>
-                <th>Risk Value Inherent</th>
-                <th>Risk Value Controlled</th>
-                <th>Probability Value Inherent</th>
-                <th>Probability Value Controlled</th>
-                <th>Impact Value Inherent</th>
-                <th>Impact Value Controlled</th>
+                <th>Risco waarde inherent</th>
+                <th>Risco waarde gecontroleerd</th>
+                <th>Waarschijnlijkheid waarde inherent</th>
+                <th>Waarschijnlijkheid waarde gecontroleerd</th>
+                <th>Impact waarde inherent</th>
+                <th>impact waarde gecontroleerd</th>
                 <th>Omschrijving</th>
                 <th>Actie type</th>
                 <th>Uitstaande actie</th>
@@ -39,7 +39,6 @@ else
         <tbody>
             @foreach (var risk in Risks)
             {
-                @*<tr @onclick="() => RiskDetails(risk.RiskId)">*@
                 <tr>
                     <td>@risk.RiskId</td>
                     <td>@risk.RiskName</td>
@@ -54,19 +53,23 @@ else
                     <td>@risk.OutstandingActions</td>
                     <td>@risk.Classification</td>
                     <td>@risk.CreationDate</td>
+                    <AuthorizeView>
+                    <td>                       
+                        <a href="/UpdateRisk"><button class="btn btn-primary" @onclick="() => RiskBean.SetRiskId(risk.RiskId)">Wijzigen</button></a>
+                        <a href="/RiskHistory"> <button class="btn btn-primary" @onclick="() => RiskBean.SetRiskId(risk.RiskId)">Geschiedenis</button></a>
+                        <button class="btn btn-danger" @onclick="@(() => Delete(risk.RiskId))">Delete</button>   
+                    </td>
+                    </AuthorizeView>
                     <td>
-                        <AuthorizeView>
-                        <a href="/UpdateRisk"><button class="btn btn-primary" @onclick="() => RiskBean.SetRiskId(risk.RiskId)">Update risk</button></a>
-                        <a href="/RiskHistory"> <button class="btn btn-primary" @onclick="() => RiskBean.SetRiskId(risk.RiskId)">Risk history</button></a>
-                        <button class="btn btn-danger" @onclick="@(() => Delete(risk.RiskId))">Delete</button>
-                        </AuthorizeView>
+                        <a href="/NormsPerRisk"> <button class="btn btn-primary" @onclick="() => RiskBean.SetRiskId(risk.RiskId)">Normen</button></a>
+                        <a href="/ControlsPerRisk"> <button class="btn btn-primary" @onclick="() => RiskBean.SetRiskId(risk.RiskId)">Controls</button></a>
                     </td>
                 </tr>
             }
         </tbody>
     </table>
 }
-<a href="/Categories"><button class="btn btn-primary">Categorieën</button></a>
+<button class="btn btn-primary" @onclick="() => Categories()">Categorieën</button>
 <button class="btn btn-primary" @onclick="() => Controls()">Controls</button>
 <button class="btn btn-primary" @onclick="() => Norms()">Normen</button>
 <br />
@@ -111,5 +114,10 @@ else
     private void Norms()
     {
         NavigationManager.NavigateTo("/Norms", true);
+    }
+
+    private void Categories()
+    {
+        NavigationManager.NavigateTo("/Categories", true);
     }
 }

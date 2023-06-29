@@ -22,6 +22,11 @@ public class NormService : INormService
         return await _normRepository.GetNormByID(id);
     }
 
+    public async Task<IEnumerable<Norm>> GetNormByRiskId(int riskId)
+    {
+        return await _normRepository.GetNormByRiskId(riskId);
+    }
+
     public async Task CreateNorm(Norm norm)
     {
         await _normRepository.AddNorm(norm);

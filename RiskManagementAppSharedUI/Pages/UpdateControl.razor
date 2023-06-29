@@ -4,6 +4,7 @@
 @inject ControlService ControlService
 @inject NavigationManager NavigationManager
 @inject ControlBean ControlBean
+@inject RiskService RiskService
 @using RiskManagementAppSharedUI.Beans
 @using RiskManagementAppSharedUI.Models
 @using RiskManagementAppSharedUI.Services
@@ -35,6 +36,23 @@ else
             <InputText class="forn-control" id="ControlType" @bind-Value="control.ControlType" placeholder="@Control.ControlType" />
         </div>
 
+        <div>
+            <label>Risico</label>
+            <InputSelect id="Risk" @bind-Value="control.RiskId" placeholder="@control.RiskId">
+                @if (Risks == null)
+                {
+                    <h4>Loading...</h4>
+                }
+                else
+                {
+                    @foreach (var risk in Risks)
+                    {
+                        <option value="@risk.RiskId">@risk.RiskName</option>
+                    }
+                }
+            </InputSelect>
+        </div>
+
         <button type="submit" class="btn btn-primary">Update control</button>
 
     </EditForm>
@@ -44,6 +62,7 @@ else
     private int ControlId { get; set; }
     public Control Control { get; set; } = new();
     private Control control = new();
+    private IEnumerable<Risk>? Risks { get; set; }
 
     protected override void OnInitialized()
     {
@@ -55,6 +74,7 @@ else
     protected override async Task OnInitializedAsync()
     {
         Control = await ControlService.GetControl(ControlId);
+        Risks = await RiskService.GetRisks();
     }
 
     private async Task Update()

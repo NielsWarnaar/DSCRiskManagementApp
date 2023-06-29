@@ -39,6 +39,18 @@ namespace RiskManagementAPI.Controllers
             return Ok(norm);
         }
 
+        // GET: api/Norms/Risks/5
+        [HttpGet("Risks/{riskId}")]
+        public async Task<ActionResult<IEnumerable<Norm>>> GetNormByRiskId(int riskId)
+        {
+            var norm = await _normService.GetNormByRiskId(riskId);
+            if (norm == null)
+            {
+                return NotFound();
+            }
+            return Ok(norm);
+        }
+
         // PUT: api/Norms/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]

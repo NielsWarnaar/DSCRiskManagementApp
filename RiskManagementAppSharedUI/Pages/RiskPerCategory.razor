@@ -9,7 +9,7 @@
 @using RiskManagementAppSharedUI.Services
 @using RiskManagementAppSharedUI
 
-<h3>RiskPerCategory</h3>
+<h3>Risico per Categorie</h3>
 
 @if (Risks == null)
 {
@@ -45,7 +45,6 @@ else
                     <td>@risk.CategoryId</td>
                     <td>
                         <a href="/UpdateRisk" @onclick="() => RiskBean.SetRiskId(risk.RiskId)">Update risk</a>
-                        @*<button class="btn btn-primary" @onclick="@(() => UpdateRisk(risk.RiskId))">Update</button>*@
                         <button class="btn btn-danger" @onclick="@(() => DeleteRisk(risk.RiskId))">Delete</button>
                     </td>
                 </tr>
@@ -60,7 +59,7 @@ else
     private int CategoryId { get; set; }
     public IEnumerable<Risk>? Risks { get; set; }
 
-protected override void OnInitialized()
+    protected override void OnInitialized()
     {
         base.OnInitialized();
         CategoryId = CategoryBean.GetCategoryId();
@@ -75,11 +74,5 @@ protected override void OnInitialized()
     {
         await RiskService.DeleteRisk(id);
         NavigationManager.NavigateTo("/", true);
-    }
-
-    private void UpdateRisk(int id)
-    {
-        RiskBean.SetRiskId(id);
-        NavigationManager.NavigateTo("/UpdateRisk", true);
     }
 }

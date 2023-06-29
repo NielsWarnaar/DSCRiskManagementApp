@@ -34,7 +34,7 @@
     </div>
 
     <div>
-        <label>Waarschijnlijkheid waarde controlled</label>
+        <label>Waarschijnlijkheid waarde gecontroleerd</label>
         <InputSelect id="riskValue" @bind-Value="risk.ProbabilityValueControlled">
             @{
                 int i = 1;
@@ -62,7 +62,7 @@
     </div>
 
     <div>
-        <label>Impact waarde controlled</label>
+        <label>Impact waarde gecontroleerd</label>
         <InputSelect id="riskValue" @bind-Value="risk.ImpactValueControlled">
             @{
                 int i = 1;
@@ -98,7 +98,7 @@
     </div>
 
     <div>
-        <label>ActionType</label>
+        <label>Actie type</label>
         <InputText id="ActionType" @bind-Value="risk.ActionType" />
     </div>
 
@@ -116,7 +116,7 @@
         <label>Vervaldatum</label>
         <InputDate id="DueDate" @bind-Value="risk.DueDate" />
     </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="submit" class="btn btn-primary">Maak risico aan</button>
 
 </EditForm>
 

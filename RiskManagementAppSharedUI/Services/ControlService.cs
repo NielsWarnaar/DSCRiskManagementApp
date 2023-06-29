@@ -60,6 +60,32 @@ public class ControlService
         }
     }
 
+    public async Task<IEnumerable<Control>> GetNomsByRiskId(int riskId)
+    {
+        try
+        {
+            var response = await _httpClient.GetAsync($"api/Controls/Risks/{riskId}");
+
+            if (response.IsSuccessStatusCode)
+            {
+                if (response.StatusCode == System.Net.HttpStatusCode.NoContent)
+                {
+                    return Enumerable.Empty<Control>();
+                }
+                return await response.Content.ReadFromJsonAsync<IEnumerable<Control>>();
+            }
+            else
+            {
+                var message = await response.Content.ReadAsStringAsync();
+                throw new Exception(message);
+            }
+        }
+        catch (Exception)
+        {
+            throw;
+        }
+    }
+
     public async Task DeleteControl(int id) 
     {
         await _httpClient.DeleteAsync($"api/Controls/{id}");
